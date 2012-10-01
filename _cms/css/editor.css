@@ -1,0 +1,143 @@
+.editor-container {
+	width: 100%;
+	overflow: auto;
+	min-height: 100px;
+}
+
+.editor-module {
+}
+
+.editor-module:hover {
+}
+
+/* TOOLBAR */
+#editor-toolbar-container {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+#editor-toolbar {
+    position: relative;
+    width: 900px;
+    margin: 0px auto;
+}
+
+#editor-toolbar-content {
+    padding: 10px;
+}
+
+#editor-toolbar-modules {
+	margin-top: 5px;
+    overflow: auto;
+    width: 100%;
+}
+
+#editor-toolbar-modules-content {
+    float: left;
+	overflow: auto;
+}
+
+.editor-toolbar-modules-container {
+	float: left;
+	height: 100px;
+	margin: 10px;
+}
+
+.editor-toolbar-modules-container div {
+}
+
+.editor-toolbar-modules-container-header {
+	padding: 10px;
+}
+
+.editor-toolbar-modules-module  {
+	float: left;
+	padding: 10px;
+	margin: 10px;
+	z-index: 10;
+}
+
+#editor-toolbar-modules-scrollbar-wrap {
+    clear: left;
+    padding: 0 4px 0 2px;
+    margin: 0 -1px -1px -1px;
+}
+
+#editor-toolbar-modules-scrollbar-wrap .ui-slider { background: none; border:0; height: 2em; margin: 0 auto;  }
+#editor-toolbar-modules-scrollbar-wrap .ui-handle-helper-parent { position: relative; width: 100%; height: 100%; margin: 0 auto; }
+#editor-toolbar-modules-scrollbar-wrap .ui-slider-handle { top:.2em; height: 1.5em; }
+#editor-toolbar-modules-scrollbar-wrap .ui-slider-handle .ui-icon { margin: -8px auto 0; position: relative; top: 50%; }
+
+#editor-toolbar-pages {
+    width: 100%;
+}
+
+#editor-toolbar-actions {
+    width: 100%;
+	margin-top: 5px;
+	padding-bottom: 5px;
+}
+
+#editor-toolbar-tempeklis {
+    position: absolute;
+    left: 50%;
+    width: 100px;
+    height: 20px;
+    bottom: -22px;
+    margin-left: -50px;
+    cursor: pointer;
+}
+
+#editor-toolbar-tempeklis span {
+    margin: 0px auto;
+}
+
+/* MODULE */
+
+#editor-module-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+}
+
+#editor-module-overlay .editor-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#editor-module-overlay button {
+    float: right;
+    margin-top: 5px;
+    margin-right: 5px;
+}
+
+.editor-iterator {
+    padding: 10px;
+}
+
+.editor-iterator li {
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.editor-dialog-input-container {
+    margin-top: 5px;
+}
+
+.editor-dialog-input-container span {
+    float: left;
+    margin-top: 3px;
+    margin-right: 3px;
+}
+
+.editor-dialog-input-container input {
+    padding-left: 2px;
+}

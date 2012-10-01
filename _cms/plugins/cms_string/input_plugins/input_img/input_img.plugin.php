@@ -1,0 +1,36 @@
+<?
+    class Plugin_input_img {
+        public function __construct() {
+            // Load JS
+            Editor::LoadJS(dirname(__FILE__) . '/input_img.js');
+        }
+        
+        public function GetContent($a_attr) {
+            $string_id = $a_attr['id'];
+            $data = Locales::ReadStringData($string_id);
+            return '<img src="_cms/static/?hash=' . $data['hash'] . ($a_attr['width'] ? "&w=" . $a_attr['width'] : "") . ($a_attr['height'] ? "&h=" . $a_attr['height'] : "") . '" />';
+        }
+        
+        public function GenEditorData($a_attr) {
+            $data = array();
+            $data['ownerid'] = $a_attr['ownerid'];
+            $data['type'] = "input_img";
+            $data['name'] = $a_attr['name'];
+			
+            $unn = Locales::ReadStringData($a_attr['id']);
+			$data['hash'] = $unn['hash'];
+			
+            $data['title'] = Locales::getStringOrJSONLocale($a_attr['title']);
+            
+            Editor::AddData(DATA_MODULE_DATA, $data);
+        }
+        
+        public function SaveObject($a_data) {
+            // Iterate over the real locales
+            foreach (Locales::$m_locales as $loc) {
+                // Save Data
+                Locales::WriteStringData($a_data->data_id, $a_data->moduleid, $loc, array('hash' => $a_data->object['hash']));
+            }
+        }
+    }
+?>
