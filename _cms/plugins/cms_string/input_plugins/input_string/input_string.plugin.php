@@ -2,7 +2,7 @@
     class Plugin_input_string {
         public function __construct() {
             // Load JS
-            Editor::LoadJS(GetRelativePath(dirname(__FILE__)) . '/input_string.js');
+            Editor::LoadJS('_cms/plugins/cms_string/input_plugins/input_string/input_string.js');
         }
         
         public function GetContent($a_attr) {

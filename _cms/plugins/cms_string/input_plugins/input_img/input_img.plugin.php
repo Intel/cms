@@ -2,7 +2,7 @@
     class Plugin_input_img {
         public function __construct() {
             // Load JS
-            Editor::LoadJS(GetRelativePath(dirname(__FILE__)) . '/input_img.js');
+            Editor::LoadJS('_cms/plugins/cms_string/input_plugins/input_img/input_img.js');
         }
         
         public function GetContent($a_attr) {

@@ -1,7 +1,7 @@
 <?
     class Plugin_cms_iterator {
         public function __construct() {
-            Editor::LoadJS(dirname(__FILE__) . '/cms_iterator.js');
+            Editor::LoadJS('_cms/plugins/cms_iterator/cms_iterator.js');
         }
         
         public function On_Node_BuildTag_CMS_ITERATOR($a_data) {
