@@ -1,0 +1,7 @@
+/*
+!/_cms/
+!_cms/*
+/_cms/static/images/*.jpg
+!index.php
+!admin.php
+!.gitignore
