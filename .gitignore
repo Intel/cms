@@ -2,6 +2,7 @@
 !/_cms/
 !_cms/*
 /_cms/static/images/*.jpg
+/_cms/templates/*
 !index.php
 !admin.php
 !.gitignore
