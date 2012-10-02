@@ -2,7 +2,7 @@
     class Plugin_input_richtext {
         public function __construct() {
             // Load JS
-            Editor::LoadJS(dirname(__FILE__) . '/input_richtext.js');
+            Editor::LoadJS(GetRelativePath(dirname(__FILE__)) . '/input_richtext.js');
 			Editor::LoadCSS('_cms/js/cleditor/jquery.cleditor.css');
 			Editor::LoadJS('_cms/js/cleditor/jquery.cleditor.min.js');
         }

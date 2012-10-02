@@ -2,7 +2,7 @@
     class Plugin_input_string {
         public function __construct() {
             // Load JS
-            Editor::LoadJS(dirname(__FILE__) . '/input_string.js');
+            Editor::LoadJS(GetRelativePath(dirname(__FILE__)) . '/input_string.js');
         }
         
         public function GetContent($a_attr) {
