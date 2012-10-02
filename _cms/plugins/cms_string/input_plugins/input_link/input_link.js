@@ -22,10 +22,10 @@ var Plugin_input_link = {
             var select = $('<select style="margin-left: 5px" class="ui-widget-content ui-corner-all"><option/></select>');
             select.insertAfter(input);
             jQuery.each(editorData.page.pages, function(index, page) {
-                select.append('<option>' + page.id + '</option>');
+                select.append('<option id="' + page.id + '">' + page.name[editorData.locales.default] + '</option>');
             });
             select.change(function() {
-                input.val('?page=' + $(this).val());
+                input.val('?page=' + $(this).attr("id"));
             });
         });
         
