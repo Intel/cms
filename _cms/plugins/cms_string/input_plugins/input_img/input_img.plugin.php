@@ -2,7 +2,6 @@
     class Plugin_input_img {
         public function __construct() {
             // Load JS
-            print $_SERVER['DOCUMENT_ROOT'];
             Editor::LoadJS(GetRelativePath(dirname(__FILE__)) . '/input_img.js');
         }
         
