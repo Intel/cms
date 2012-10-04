@@ -25,7 +25,7 @@ var Plugin_input_link = {
                 select.append('<option id="' + page.id + '">' + page.name[editorData.locales.default] + '</option>');
             });
             select.change(function() {
-                input.val('?page=' + $(this).attr("id"));
+                input.val('?page=' + $(this).find("option:selected").attr("id"));
             });
         });
         
