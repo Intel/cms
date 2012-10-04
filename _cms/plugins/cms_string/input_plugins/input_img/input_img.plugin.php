@@ -8,7 +8,7 @@
         public function GetContent($a_attr) {
             $string_id = $a_attr['id'];
             $data = Locales::ReadStringData($string_id);
-            return '<img src="_cms/static/?hash=' . $data['hash'] . ($a_attr['width'] ? "&w=" . $a_attr['width'] : "") . ($a_attr['height'] ? "&h=" . $a_attr['height'] : "") . '" />';
+            return '<img data-hash="'.$data['hash'].'" '.$a_attr['attr'].' src="_cms/static/?hash=' . $data['hash'] . ($a_attr['width'] ? "&w=" . $a_attr['width'] : "") . ($a_attr['height'] ? "&h=" . $a_attr['height'] : "") . '" />';
         }
         
         public function GenEditorData($a_attr) {
