@@ -16,6 +16,7 @@
             $data['ownerid'] = $a_attr['ownerid'];
             $data['type'] = "input_string";
             $data['name'] = $a_attr['name'];
+			$data['width'] = $a_attr['width'];
             $data['tooltip'] = Locales::getStringOrJSONLocale($a_attr['tooltip']);
             $data['title'] = Locales::getStringOrJSONLocale($a_attr['title']);
             

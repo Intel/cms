@@ -8,7 +8,7 @@
         public function GetContent($a_attr) {
             $string_id = $a_attr['id'];
             $data = Locales::ReadStringData($string_id);
-            return '<a href="'.$data['link_url'].'">'.$data['link_title'].'</a>';
+            return '<a '.$a_attr['attr'].' href="'.$data['link_url'].'">'.$data['link_title'].'</a>';
         }   
 
         public function GenEditorData($a_attr) {

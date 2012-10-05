@@ -1,7 +1,7 @@
 var Plugin_input_string = {
     Generate: function(object_data) {
         var tmpl = jQuery.templates('<label for="{{>name}}">{{>title}}</label></br> \
-                                     <input type="text" title="{{>tooltip}}"  class="text ui-widget-content ui-corner-all">');
+                                     <input type="text" size="{{>width}}" title="{{>tooltip}}"  class="text ui-widget-content ui-corner-all">');
         
         // Render template
         var string = $(tmpl.render(object_data));
