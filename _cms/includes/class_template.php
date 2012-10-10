@@ -300,7 +300,7 @@
             for ($itr = 0; $itr < $len; ++$itr)
             {
                 // Escape character
-                if ($str[$itr] === '@') {
+                if ($str[$itr] === TEMPLATE_ESCAPE_CHARACTER) {
                     ++$itr;
                     continue;
                 }

@@ -29,6 +29,9 @@
     define("COMPILER_TEMPLATES_DIR",        "./_cms/templates");
     define("COMPILER_MODE_FRONTEND",        0);
     define("COMPILER_MODE_EDITOR",          1);
+
+    // Template Engine
+    define("TEMPLATE_ESCAPE_CHARACTER",     '@');
     
     // Editor
     define("DATA_CONTAINER",                0);
