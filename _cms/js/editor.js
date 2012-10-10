@@ -169,7 +169,7 @@ function InitToolbar() {
         $('#editor-toolbar-tempeklis').slideUp('fast', function() { 
             $('#editor-toolbar-content').slideDown('slow');
 			// Fix for scrollbar
-			sizeScrollbar();
+			//sizeScrollbar();
         });
     });
     $('#editor-toolbar-content').mouseleave(function() {
@@ -204,10 +204,12 @@ function InitToolbar() {
     $('#editor-button-page-settings').button().click(function() { alert('unfinished'); });
     
     // module container
+    
+    /* DISABLED DUE TO BUG OVERFLOW. DO NOT ENABLE UNTIL CHRISTMAS.
     //scrollpane parts
     var scrollPane = $("#editor-toolbar-modules");
     var scrollContent = $("#editor-toolbar-modules-content");
-		
+	
     //build slider
     var scrollbar = $("#editor-toolbar-modules-scrollbar").slider({
         slide: function( event, ui ) {
@@ -273,6 +275,7 @@ function InitToolbar() {
     });
     //init scrollbar size
     setTimeout( sizeScrollbar, 10 );//safari wants a timeout
+    */
 	
 	// hide
 	$('#editor-toolbar-content').hide();

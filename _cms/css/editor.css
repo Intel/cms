@@ -30,12 +30,14 @@
 
 #editor-toolbar-modules {
 	margin-top: 5px;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: scroll;
     width: 100%;
 }
 
 #editor-toolbar-modules-content {
     float: left;
+    margin-right:-32767px;
 	overflow: auto;
 }
 

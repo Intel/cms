@@ -379,9 +379,6 @@
                                         <div id="editor-toolbar-modules" class="ui-state-default ui-corner-all">
                                             <div id="editor-toolbar-modules-content">
                                             </div>
-                                            <div id="editor-toolbar-modules-scrollbar-wrap" class="ui-widget-content ui-corner-bottom">
-                                                <div id="editor-toolbar-modules-scrollbar"></div>
-                                            </div>
                                         </div>
                                     </div>
                                     <div id="editor-toolbar-tempeklis" class="ui-state-default ui-corner-bottom"><span class="ui-icon ui-icon-wrench"></span></div>
