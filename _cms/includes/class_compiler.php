@@ -289,7 +289,7 @@
                 if ($result->HasData()) {
                     $this->m_id = $result->GetValue('id');
                 } else {
-                    $module = Module::Create("static", $this->m_template, $this->m_template, $this->m_name, $this->m_flags);
+                    $module = Module::Create("static", $this->m_template, $this->m_name, $this->m_flags);
                     $this->m_id = $module->m_id;
                 }
                 
