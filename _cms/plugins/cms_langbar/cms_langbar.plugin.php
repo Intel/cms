@@ -17,7 +17,7 @@
             }
             
             // Add container div
-            $langbar = '<div style="position: absolute; right: 0; top: 0; padding: 5px;">' . $langs . '</div>';
+            $langbar = '<div style="position: absolute; right: 0; top: 0; padding: 5px; z-index: 10000;">' . $langs . '</div>';
             
             // Replace
             $node->addChild(new Template_TextNode($langbar));
