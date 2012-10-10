@@ -271,6 +271,7 @@
             $this->m_node = $a_node;
             
             $this->m_template = $this->m_node->getAttribute("template");
+            $this->m_name = $this->m_node->getAttribute("name");
             $this->m_flags = $this->m_node->getAttribute("flags");
             
             if ($this->m_flags == "_global")
@@ -278,7 +279,7 @@
             else
                 $this->m_pageid = $a_pageid;   
             
-            $query = "SELECT `tmpl`.`id` FROM `" . DB_TBL_MODULE_TEMPLATE . "` AS `tmpl` LEFT JOIN `" . DB_TBL_MODULE . "` AS `module` ON `tmpl`.`id` = `module`.`id` WHERE `tmpl`.`template` = '" . $this->m_template . "' AND `module`.`pageid` = '" . $this->m_pageid . "' AND `module`.`container` = 'global'";
+            $query = "SELECT `tmpl`.`id` FROM `" . DB_TBL_MODULE_TEMPLATE . "` AS `tmpl` LEFT JOIN `" . DB_TBL_MODULE . "` AS `module` ON `tmpl`.`id` = `module`.`id` WHERE `tmpl`.`template` = '" . $this->m_template . "' AND `tmpl`.`name` = '" . $this->m_name . "' AND `module`.`pageid` = '" . $this->m_pageid . "' AND `module`.`container` = 'global'";
             $result = Database::Query($query);
             
             // Create module if it doesn't exist
@@ -288,7 +289,7 @@
                 if ($result->HasData()) {
                     $this->m_id = $result->GetValue('id');
                 } else {
-                    $module = Module::Create("static", $this->m_template, $this->m_template, $this->m_flags);
+                    $module = Module::Create("static", $this->m_template, $this->m_template, $this->m_name, $this->m_flags);
                     $this->m_id = $module->m_id;
                 }
                 
