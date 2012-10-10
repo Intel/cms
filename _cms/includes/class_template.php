@@ -299,6 +299,12 @@
             
             for ($itr = 0; $itr < $len; ++$itr)
             {
+                // Escape character
+                if ($str[$itr] === '@') {
+                    ++$itr;
+                    continue;
+                }
+                
                 if ($str[$itr] === '[' && !$tag_open) {
                     $tag_open = true;
                     $tag = '';
