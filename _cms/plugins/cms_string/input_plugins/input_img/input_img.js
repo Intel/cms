@@ -47,14 +47,16 @@ var Plugin_input_img = {
         
         // Add Tooltips
         string.filter('input').tipsy({html: true, gravity: 's'});
-        string.filter('span').tipsy({html: true, gravity: 'w', opacity: 1.0, delayOut: 1500, fade: true });
+        string.filter('span').tipsy({html: true, gravity: 'w', opacity: 1.0 });
         
 		// Perform activities
 		string.filter('input').change(function() {
             IMGUpload(this.files[0], function(xhr) {
 				var hash = JSON.parse(xhr.responseText).hash;
                 string.filter('span').attr('title', '<img src="'+GetImg(hash, 200, 200)+'" width=200 height=200>');
-                string.filter('span').trigger('mouseover').trigger('mouseout');
+                string.filter('span').trigger('mouseover').delay(3500, "qq").queue("qq", function(){ 
+                  string.filter('span').trigger('mouseout');
+                }).dequeue("qq");                
 				object_data.hash = hash;
             });
         });		
