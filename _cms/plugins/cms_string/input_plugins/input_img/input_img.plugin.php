@@ -16,6 +16,8 @@
             $data['ownerid'] = $a_attr['ownerid'];
             $data['type'] = "input_img";
             $data['name'] = $a_attr['name'];
+            $data['width'] = $a_attr['width'];
+            $data['height'] = $a_attr['height'];
 			
             $unn = Locales::ReadStringData($a_attr['id']);
 			$data['hash'] = $unn['hash'];
