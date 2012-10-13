@@ -35,24 +35,28 @@ function GetImg(hash, w, h)
 var Plugin_input_img = {
     Generate: function(object_data) {
         var tmpl = jQuery.templates('<label for="{{>name}}">{{>title}}</label></br> \
-                                     <input type="file" title="{{>tooltip}}"  class="text ui-widget-content ui-corner-all"> \
-									 <img src="" />\
+                                     <input type="file" title="Peržiūros failas bus automatiškai sumažintas iki {{>width}}x{{>height}} px"  class="text ui-widget-content ui-corner-all">\
+									 <span title="<img src=\'\' width=200 height=200>">Peržiūra</span><br/>\
 									 ');
         
         // Render template
         var string = $(tmpl.render(object_data));
+       
+		// Load image that's already there
+		string.filter('span').attr('title', '<img src="'+GetImg(object_data.hash, 200, 200)+'" width=200 height=200>');
         
         // Add Tooltips
-        string.tipsy();
-		
-		// Load image that's already there
-		string.filter('img').attr('src', GetImg(object_data.hash, 100, 100));
+        string.filter('input').tipsy({html: true, gravity: 's'});
+        string.filter('span').tipsy({html: true, gravity: 'w', opacity: 1.0 });
         
 		// Perform activities
 		string.filter('input').change(function() {
             IMGUpload(this.files[0], function(xhr) {
 				var hash = JSON.parse(xhr.responseText).hash;
-                string.filter('img').attr('src', GetImg(hash, 100, 100));
+                string.filter('span').attr('title', '<img src="'+GetImg(hash, 200, 200)+'" width=200 height=200>');
+                string.filter('span').trigger('mouseover').delay(3500, "qq").queue("qq", function(){ 
+                  string.filter('span').trigger('mouseout');
+                }).dequeue("qq");                
 				object_data.hash = hash;
             });
         });		
