@@ -9,8 +9,8 @@
         
         public function GetContent($a_attr) {
             $string_id = $a_attr['id'];
-            $data = Locales::ReadStringData($string_id);
-            return $data['textbox'];
+            $data = Locales::ReadData($string_id);
+            return $data['textbox'][Locales::GetLocale()];
         }
         
         public function GenEditorData($a_attr) {
@@ -21,23 +21,19 @@
          // $data['tooltip'] = Locales::getStringOrJSONLocale($a_attr['tooltip']);
             $data['title'] = Locales::getStringOrJSONLocale($a_attr['title']);
             
-            foreach (Locales::$m_locales as $loc) {
+            $data['locales'] = Locales::ReadData($a_attr['id']);
+            /*foreach (Locales::$m_locales as $loc) {
                 $richtext_content = Locales::ReadStringData($a_attr['id'], $loc);
                 $data['locales'][$loc] = addslashes($richtext_content['textbox']);
-            }
+            }*/
             
             Editor::AddData(DATA_MODULE_DATA, $data);
         }
         
         public function SaveObject($a_data) {
             $object = $a_data->object;
-            // Iterate over locales
-            foreach ($object['locales'] as $locale=>$string) {			
-                // Create Data array
-                $data = array('textbox' => $string);
-                // Save Data
-                Locales::WriteStringData($a_data->data_id, $a_data->moduleid, $locale, $data);
-            }
+            
+            Locales::WriteData($a_data->data_id, array('textbox' => $object['locales']));
         }
     }
 ?>

@@ -31,10 +31,10 @@
         
         public static function InitLocale($a_locale) {
             self::$m_const_strings[$a_locale] = parse_ini_file(LOCALES_DIR . '/' . $a_locale . '.ini');
-            self::LoadDBStrings($a_locale);
+            //self::LoadDBStrings($a_locale);
         }
         
-        public static function LoadDBStrings($a_locale) {
+        /*public static function LoadDBStrings($a_locale) {
             $result = Database::Query("SELECT * FROM `" . DB_TBL_STRINGS . "` WHERE `locale` IN ('', '" . $a_locale . "')");
             
             if ($result->HasData()) {
@@ -44,7 +44,7 @@
                     self::$m_db_strings[$a_locale][$id] = $row;
                 } while ($result->NextRow());
             }
-        }
+        }*/
         
         public static function SetUserLocale($a_locale = NULL) {
             if ($a_locale) {
@@ -58,6 +58,11 @@
             } else {
                 self::$m_locale = LOCALES_DEFAULT;
             }
+        }
+        
+        public static function GetLocale()
+        {
+            return self::$m_locale;
         }
         
         public static function GetConstString($a_key, $a_locale = NULL, $a_vars = NULL)
@@ -78,32 +83,38 @@
                 return self::$m_const_strings[$a_locale][$a_key];
         }
         
-        public static function GetDBData($a_key, $a_locale = NULL)
+        public static function GetDBData($a_id)
         {
-            if (!$a_locale)
-                $a_locale = self::$m_locale;
+            if (!isset(self::$m_db_strings[$a_id]))
+                self::LoadModuleDataById($a_id);
             
-            if (!isset(self::$m_db_strings[$a_locale]))
-                self::InitLocale($a_locale);
-            
-            if (!isset(self::$m_db_strings[$a_locale][$a_key]))
-                return;
-            
-            return self::$m_db_strings[$a_locale][$a_key];
+            return self::$m_db_strings[$a_id];
         }
         
-        public static function WriteStringData($a_id, $a_moduleid, $a_locale, $a_data) {
+        public static function LoadModuleDataById($a_key)
+        {
+            $result = Database::Query("SELECT * FROM `cms_data` WHERE `owner` = 
+                                        (SELECT `owner` FROM `cms_data` WHERE `id` = '" . $a_key . "')");
+            
+            if ($result->HasData()) {
+                do {
+                    $row = $result->GetRow();
+                    $id = $row['id'];
+                    self::$m_db_strings[$id] = $row;
+                } while ($result->NextRow());
+            }
+        }
+        
+        public static function WriteData($a_id, $a_data) {
             $id = Database::Escape($a_id);
-            $moduleid = Database::Escape($a_moduleid);
-            $locale = Database::Escape($a_locale);
             $data = Database::Escape(serialize($a_data));
             
-            Database::Query("INSERT INTO `" . DB_TBL_STRINGS . "` (`id`, `moduleid`, `locale`, `string`) VALUES ('" . $id . "', '" . $moduleid . "', '" . $locale . "', '" . $data . "')");
+            Database::Query("UPDATE `" . DB_TBL_DATA . "` SET `data` = '" . $data . "' WHERE `id` = '" . $id . "'");
         }
         
-        public static function ReadStringData($a_id, $a_locale = NULL) {
-            $data = self::GetDBData($a_id, $a_locale);
-            return unserialize($data['string']);
+        public static function ReadData($a_id) {
+            $data = self::GetDBData($a_id);
+            return unserialize($data['data']);
         }
         
         public static function getStringOrJSONLocale($string) {

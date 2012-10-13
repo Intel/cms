@@ -16,6 +16,9 @@ var Plugin_input_link = {
         // Add Tooltips
         string.tipsy();
         
+        if (!link_data.link_title)
+            link_data.link_title = new Object;
+        
         // Copy page link
         string.find('input[name="link_url"]').each(function(index) {
             var input = $(this);

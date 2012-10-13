@@ -33,6 +33,10 @@
             return self::$mysqli->escape_string($string);
         }
         
+        public static function PrepareSTMT($query) {
+            return self::$mysqli->prepare($query);
+        }
+        
         public static function GetLastIncrId() {
             return self::$mysqli->insert_id;
         }

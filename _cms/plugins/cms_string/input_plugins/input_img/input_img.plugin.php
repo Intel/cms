@@ -7,7 +7,7 @@
         
         public function GetContent($a_attr) {
             $string_id = $a_attr['id'];
-            $data = Locales::ReadStringData($string_id);
+            $data = Locales::ReadData($string_id);
             return '<img data-hash="'.$data['hash'].'" '.$a_attr['attr'].' src="_cms/static/?hash=' . $data['hash'] . ($a_attr['width'] ? "&w=" . $a_attr['width'] : "") . ($a_attr['height'] ? "&h=" . $a_attr['height'] : "") . '" />';
         }
         
@@ -19,7 +19,7 @@
             $data['width'] = $a_attr['width'];
             $data['height'] = $a_attr['height'];
 			
-            $unn = Locales::ReadStringData($a_attr['id']);
+            $unn = Locales::ReadData($a_attr['id']);
 			$data['hash'] = $unn['hash'];
 			
             $data['title'] = Locales::getStringOrJSONLocale($a_attr['title']);
@@ -28,11 +28,7 @@
         }
         
         public function SaveObject($a_data) {
-            // Iterate over the real locales
-            foreach (Locales::$m_locales as $loc) {
-                // Save Data
-                Locales::WriteStringData($a_data->data_id, $a_data->moduleid, $loc, array('hash' => $a_data->object['hash']));
-            }
+            Locales::WriteData($a_data->data_id, array('hash' => $a_data->object['hash']));
         }
     }
 ?>
