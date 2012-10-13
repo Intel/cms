@@ -76,7 +76,7 @@
                 return ERROR_USER_EXISTS;
             
             // Escape Strings
-            $email = mysql_real_escape_string($a_email);
+            $email = Database::Escape($a_email);
             
             // Generate Salt and Hash Password
             $salt = '';
@@ -91,7 +91,7 @@
         
         public function Login($a_username, $a_password, $a_remember) {
             // Escape String
-            $username = mysql_real_escape_string($a_username);
+            $username = Database::Escape($a_username);
             
             // Get Data
             $result = Database::Query("SELECT * FROM `" . DB_TBL_ACCOUNT . "` WHERE `username` = '" . $username . "'");
@@ -155,7 +155,7 @@
                 return false;
             
             // Escape string
-            $userid = mysql_real_escape_string(UGetCookie('userid'));
+            $userid = Database::Escape(UGetCookie('userid'));
             // Query for user
             
             $account_data = Database::Query("SELECT * FROM `" . DB_TBL_ACCOUNT . "` WHERE `id` = '" . $userid . "';");

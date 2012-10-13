@@ -19,7 +19,7 @@
         }
         
         /*public static function GetPageId($a_name) {
-            $name = mysql_real_escape_string($a_name);
+            $name = Database::Escape($a_name);
             $result = Database::Query("SELECT `id` FROM `" . DB_TBL_PAGES . "` WHERE `name` = '" . $name . "'");
             
             if (!$result->HasData())
@@ -29,7 +29,7 @@
         }*/
         
         public static function GetPage($a_id) {
-            $id = mysql_real_escape_string($a_id);
+            $id = Database::Escape($a_id);
             $result = Database::Query("SELECT * FROM `" . DB_TBL_PAGES . "` WHERE `id` = '" . $id . "'");
             
             if (!$result->HasData())

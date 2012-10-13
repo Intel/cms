@@ -14,7 +14,7 @@
     
     // Main classes
     include("class_template.php");
-    include("class_database.php");
+    include("class_database_mysqli.php");
     include("class_account.php");
     include("class_locales.php");
     include("class_compiler.php");

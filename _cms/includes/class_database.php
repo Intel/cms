@@ -23,6 +23,10 @@
             return new DBResult($result);
 		}
         
+        public static function Escape(&$string) {
+            return mysql_real_escape_string($string, self::$mysql_conn);
+        }
+        
         public static function GetLastIncrId() {
             return mysql_insert_id(self::$mysql_conn);
         }

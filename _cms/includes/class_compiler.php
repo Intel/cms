@@ -27,7 +27,7 @@
             $compiled = $this->BuildTemplate($result->GetValue('template') . ".tmpl");
             
             if ($a_mode == COMPILER_MODE_FRONTEND) {
-                Database::Query("UPDATE `" . DB_TBL_PAGES . "` SET `compiled` = '" . mysql_real_escape_string(serialize($compiled)) . "' WHERE `id` = '" . $a_id . "'");
+                Database::Query("UPDATE `" . DB_TBL_PAGES . "` SET `compiled` = '" . Database::Escape(serialize($compiled)) . "' WHERE `id` = '" . $a_id . "'");
                 return $compiled;
             } else
                 return $compiled; // Do not insert editor pages into db

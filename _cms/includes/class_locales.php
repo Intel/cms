@@ -93,10 +93,10 @@
         }
         
         public static function WriteStringData($a_id, $a_moduleid, $a_locale, $a_data) {
-            $id = mysql_real_escape_string($a_id);
-            $moduleid = mysql_real_escape_string($a_moduleid);
-            $locale = mysql_real_escape_string($a_locale);
-            $data = mysql_real_escape_string(serialize($a_data));
+            $id = Database::Escape($a_id);
+            $moduleid = Database::Escape($a_moduleid);
+            $locale = Database::Escape($a_locale);
+            $data = Database::Escape(serialize($a_data));
             
             Database::Query("INSERT INTO `" . DB_TBL_STRINGS . "` (`id`, `moduleid`, `locale`, `string`) VALUES ('" . $id . "', '" . $moduleid . "', '" . $locale . "', '" . $data . "')");
         }

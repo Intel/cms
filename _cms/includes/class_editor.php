@@ -16,9 +16,9 @@
 			if (!is_file(COMPILER_TEMPLATES_DIR . "/modules/" . $a_type . "/" . $a_template . ".tmpl"))
 				die("Editor::CreateModule: Template not found: " . $a_type . ":" . $a_template);
 			
-			$type = mysql_real_escape_string($a_type);
-			$template = mysql_real_escape_string($a_template);
-			$name = mysql_real_escape_string($a_name);
+			$type = Database::Escape($a_type);
+			$template = Database::Escape($a_template);
+			$name = Database::Escape($a_name);
 			
 			Database::Query("INSERT INTO `" . DB_TBL_MODULE_TEMPLATE . "` (`type`, `template`, `name`) VALUES ('" . $type . "', '" . $template . "', '" . $name . "')");
 			
@@ -30,7 +30,7 @@
 		}
 		
 		public static function DeleteModule($a_id, $a_force = false) {
-			$id = mysql_real_escape_string($a_id);
+			$id = Database::Escape($a_id);
 			$result = Database::Query("SELECT * FROM `" . DB_TBL_MODULE_TEMPLATE . "` WHERE `id` = '" . $id . "'");
 			
 			if (!$result->HasData())
@@ -54,7 +54,7 @@
 			if (!is_file(COMPILER_TEMPLATES_DIR . '/' . $a_data['template'] . ".tmpl"))
 				die("Editor::CreatePage: Template not found: " . $a_data['template']);
 			
-			$template = mysql_real_escape_string($a_data['template']);
+			$template = Database::Escape($a_data['template']);
 			$name = serialize($a_data['name']);
 			
 			Database::Query("INSERT INTO `" . DB_TBL_PAGES . "` (`name`, `template`) VALUES ('" . $name . "', '" . $template . "')");
@@ -71,7 +71,7 @@
 		}
 		
         public static function SavePage($a_data) {
-            self::$m_pageid = mysql_real_escape_string($a_data['pageid']);
+            self::$m_pageid = Database::Escape($a_data['pageid']);
             
             Database::Query("DELETE FROM `" . DB_TBL_MODULE . "` WHERE `pageid` = '" . self::$m_pageid . "' AND `container` != 'global'");
             
@@ -91,7 +91,7 @@
         }
 		
 		public static function DeletePage($a_id) {
-			$id = mysql_real_escape_string($a_id);
+			$id = Database::Escape($a_id);
 			
 			Database::Query("DELETE FROM `" . DB_TBL_MODULE . "` WHERE `pageid` = '" . $id . "'");
 			Database::Query("DELETE FROM `" . DB_TBL_PAGES . "` WHERE `id` = '" . $id . "'");
@@ -102,7 +102,7 @@
 		}
 		
 		public static function SetDefaultPage($a_id) {
-			$id = mysql_real_escape_string($a_id);
+			$id = Database::Escape($a_id);
 			
 			Database::Query("UPDATE `" . DB_TBL_PAGES . "` SET `default` = '0'");
 			Database::Query("UPDATE `" . DB_TBL_PAGES . "` SET `default` = '1' WHERE `id` = '" . $id . "'");
@@ -164,7 +164,7 @@
 		}
 		
 		public static function GenerateModuleData($a_id) {
-			$id = mysql_real_escape_string($a_id);
+			$id = Database::Escape($a_id);
 			
 			$result = Database::Query("SELECT * FROM `" . DB_TBL_MODULE_TEMPLATE . "` WHERE `id` = '" . $id . "'");
 			
@@ -189,8 +189,8 @@
         
         public static function SaveModule($a_data) {
             //print_r($_POST);
-            self::$m_pageid = mysql_real_escape_string($_POST['page_id']);
-            self::$m_moduleid = mysql_real_escape_string($_POST['module_id']);
+            self::$m_pageid = Database::Escape($_POST['page_id']);
+            self::$m_moduleid = Database::Escape($_POST['module_id']);
             
             // Delete old data
             Database::Query("DELETE FROM `" . DB_TBL_DATA . "` WHERE `moduleid` = '" . self::$m_moduleid . "'");
@@ -227,7 +227,7 @@
                 $data_object->moduleid = self::$m_moduleid;
                 ObjMgr::GetPluginMgr()->ExecuteHook("On_Editor_SaveModuleFragmentObject", $data_object);
                 
-                /*$name = mysql_real_escape_string($object['name']);
+                /*$name = Database::Escape($object['name']);
                 
                 switch ($object['type'])
                 {
@@ -241,17 +241,17 @@
                         $id = Database::GetLastIncrId();
                         // Iterate over locales
                         foreach ($object['value'] as $locale=>$string) {
-                            $string = mysql_real_escape_string($string);
+                            $string = Database::Escape($string);
                             Database::Query("INSERT INTO `" . DB_TBL_STRINGS . "` (`id`, `moduleid`, `locale`, `string`) VALUES ('" . $id . "', '" . self::$m_moduleid . "', '" . $locale . "', '" . $string . "')");
                         }
                         break;
                     case 'link':
                         Database::Query("INSERT INTO `" . DB_TBL_DATA . "` (`type`, `name`, `owner`, `moduleid`) VALUES ('string', '" . $object['name'] . "', '" . $a_parent . "', '" . self::$m_moduleid . "')");
                         $id = Database::GetLastIncrId();
-                        $url = mysql_real_escape_string($object['link_url']);
+                        $url = Database::Escape($object['link_url']);
                         // Iterate over locales
                         foreach ($object['link_title'] as $locale=>$string) {
-                            $string = mysql_real_escape_string($string);
+                            $string = Database::Escape($string);
                             Database::Query("INSERT INTO `" . DB_TBL_STRINGS . "` (`id`, `moduleid`, `locale`, `string`, `string2`) VALUES ('" . $id . "', '" . self::$m_moduleid . "', '" . $locale . "', '" . $url . "', '" . $string . "')");
                         }
                         break;
@@ -261,14 +261,14 @@
                         // Iterate over locales
                         foreach ($object['value'] as $locale=>$string) {
                             $string = str_replace('<br>', '<br></br>', $string);
-                            $string = mysql_real_escape_string($string);
+                            $string = Database::Escape($string);
                             Database::Query("INSERT INTO `" . DB_TBL_STRINGS . "` (`id`, `moduleid`, `locale`, `string`) VALUES ('" . $id . "', '" . self::$m_moduleid . "', '" . $locale . "', '" . $string . "')");
                         }
                         break;
                     case 'img':
                         Database::Query("INSERT INTO `" . DB_TBL_DATA . "` (`type`, `name`, `owner`, `moduleid`) VALUES ('string', '" . $object['name'] . "', '" . $a_parent . "', '" . self::$m_moduleid . "')");
                         $id = Database::GetLastIncrId();
-                        $img_src = mysql_real_escape_string($object['img_src']);
+                        $img_src = Database::Escape($object['img_src']);
                         Database::Query("INSERT INTO `" . DB_TBL_STRINGS . "` (`id`, `moduleid`, `string`) VALUES ('" . $id . "', '" . self::$m_moduleid . "', '" . $img_src . "')");
                         break;
                 }*/
@@ -278,7 +278,7 @@
         public static function GetPage($a_id) {
             self::$m_pageid = $a_id;
             
-            $result = Database::Query("SELECT * FROM `" . DB_TBL_PAGES . "` WHERE `id` = '" . mysql_real_escape_string($a_id) . "'");
+            $result = Database::Query("SELECT * FROM `" . DB_TBL_PAGES . "` WHERE `id` = '" . Database::Escape($a_id) . "'");
             
             if (!$result->HasData())
                 die("Page with id #" . $a_id . " not found!");
@@ -320,7 +320,7 @@
         }
 		
 		public static function GetModule($a_id) {
-			$id = mysql_real_escape_string($a_id);
+			$id = Database::Escape($a_id);
 			$module = new Module($id);
 			
 			$doc = $module->Build();
