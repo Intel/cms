@@ -18,14 +18,10 @@
             $data['ownerid'] = $a_attr['ownerid'];
             $data['type'] = "input_richtext";
             $data['name'] = $a_attr['name'];
-         // $data['tooltip'] = Locales::getStringOrJSONLocale($a_attr['tooltip']);
             $data['title'] = Locales::getStringOrJSONLocale($a_attr['title']);
             
-            $data['locales'] = Locales::ReadData($a_attr['id']);
-            /*foreach (Locales::$m_locales as $loc) {
-                $richtext_content = Locales::ReadStringData($a_attr['id'], $loc);
-                $data['locales'][$loc] = addslashes($richtext_content['textbox']);
-            }*/
+            $locdata = Locales::ReadData($a_attr['id']);
+            $data['locales'] = $locdata['textbox'];
             
             Editor::AddData(DATA_MODULE_DATA, $data);
         }
