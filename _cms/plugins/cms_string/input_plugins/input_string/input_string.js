@@ -18,8 +18,7 @@ var Plugin_input_string = {
     },
     
     LoadLocale: function(string, new_locale, old_locale) {
-        // since string is array of children, we need to use filter
-        var input = string.filter('input');
+        var input = string.find('input');
         
         // Retrieves object data from object (function is in editor.js)
         var object_data = GetObjectData(string);
