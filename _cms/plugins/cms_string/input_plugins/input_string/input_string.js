@@ -9,6 +9,12 @@ var Plugin_input_string = {
         // Add Tooltips
         string.tipsy();
         
+        if(object_data.datepicker) {
+            string.filter('input').datepicker();
+            string.filter('input').datepicker( "option", "dateFormat", "yy-mm-dd");
+            string.filter('input').tipsy({ gravity: 's' });
+        }
+        
         // Initialize datatype if object is new
         if (!object_data.locales)
             object_data.locales = new Object;
