@@ -9,6 +9,9 @@ var Plugin_input_string = {
         // Add Tooltips
         string.tipsy();
         
+        // Initialize datatype if object is new
+        object_data.locales = new Object;
+        
         // Add to container
         return string;
     },
