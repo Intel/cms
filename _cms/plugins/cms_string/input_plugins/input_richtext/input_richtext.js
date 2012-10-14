@@ -24,8 +24,7 @@ var Plugin_input_richtext = {
     },
     
     LoadLocale: function(string, new_locale, old_locale) {
-        // since string is array of children, we need to use filter
-        var input = string.filter('textarea');
+        var input = string.find('textarea');
         
         // Retrieves object data from object (function is in editor.js)
         var object_data = GetObjectData(string);
@@ -36,6 +35,9 @@ var Plugin_input_richtext = {
         
         // Set new value
         input.val(object_data.locales[new_locale]);
+        
+        // Trigger cleditor update
+        input.blur();
     },
     
     Save: function(string) {

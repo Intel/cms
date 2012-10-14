@@ -583,7 +583,7 @@ function EditModule(id) {
             input.data('locale_data', locale_data);
         });*/
         dialog.find('#editor-settings-container').find('fieldset[data-type]').each(function(index) {
-            PluginMgr.ExecuteByName("EditableObject_LoadLocale", $(this).attr('data-type'), $(this).children(), new_locale, old_locale);
+            PluginMgr.ExecuteByName("EditableObject_LoadLocale", $(this).attr('data-type'), $(this), new_locale, old_locale);
         });
         editorData.locales.current = new_locale;
 	}
