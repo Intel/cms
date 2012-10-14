@@ -81,7 +81,7 @@
         public static function LoadModuleDataById($a_key)
         {
             $result = Database::Query("SELECT * FROM `" . DB_TBL_DATA . "` WHERE `owner` = 
-                                        (SELECT `owner` FROM `cms_data` WHERE `id` = '" . $a_key . "')");
+                                        (SELECT `owner` FROM `" . DB_TBL_DATA . "` WHERE `id` = '" . $a_key . "')");
             
             if ($result->HasData()) {
                 do {
