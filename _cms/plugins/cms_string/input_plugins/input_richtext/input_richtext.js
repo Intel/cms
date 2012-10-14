@@ -11,7 +11,8 @@ var Plugin_input_richtext = {
         string.tipsy();
         
         // Initialize datatype if object is new
-        object_data.locales = new Object;
+        if (!object_data.locales)
+            object_data.locales = new Object;
 		
 		// Load richtext editor
         string.filter("textarea").bind("showup", function() {

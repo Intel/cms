@@ -10,7 +10,8 @@ var Plugin_input_string = {
         string.tipsy();
         
         // Initialize datatype if object is new
-        object_data.locales = new Object;
+        if (!object_data.locales)
+            object_data.locales = new Object;
         
         // Add to container
         return string;
