@@ -45,7 +45,6 @@
 			Database::Query("DELETE FROM `" . DB_TBL_MODULE_TEMPLATE . "` WHERE `id` = '" . $id . "'");
 			Database::Query("DELETE FROM `" . DB_TBL_MODULE . "` WHERE `id` = '" . $id . "'");
 			Database::Query("DELETE FROM `" . DB_TBL_DATA . "` WHERE `moduleid` = '" . $id . "'");
-			Database::Query("DELETE FROM `" . DB_TBL_STRINGS . "` WHERE `moduleid` = '" . $id . "'");
 			
 			print 'ok';
 		}
@@ -194,7 +193,6 @@
             
             // Delete old data
             Database::Query("DELETE FROM `" . DB_TBL_DATA . "` WHERE `moduleid` = '" . self::$m_moduleid . "'");
-            Database::Query("DELETE FROM `" . DB_TBL_STRINGS . "` WHERE `moduleid` = '" . self::$m_moduleid . "'");
             
             self::SaveModuleFragment($a_data, self::$m_moduleid);
             
