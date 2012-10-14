@@ -19,6 +19,7 @@
             $data['width'] = $a_attr['width'];
             $data['tooltip'] = Locales::getStringOrJSONLocale($a_attr['tooltip']);
             $data['title'] = Locales::getStringOrJSONLocale($a_attr['title']);
+            $data['datepicker'] = (isset($a_attr['datepicker']) ? true : false);
             
             $locdata = Locales::ReadData($a_attr['id']);
             $data['locales'] = $locdata['text'];
