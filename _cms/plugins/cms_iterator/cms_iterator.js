@@ -22,6 +22,8 @@ var Plugin_cms_iterator = {
                 editorData.module_data[responseData.id] = responseData.content;
                 var content = Plugin_cms_iterator.CreateContent(responseData.content);
                 container.append(content);
+                
+                content.find('*').trigger("showup");
             });
         });
         
