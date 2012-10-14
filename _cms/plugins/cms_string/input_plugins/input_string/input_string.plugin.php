@@ -20,7 +20,7 @@
             $data['tooltip'] = Locales::getStringOrJSONLocale($a_attr['tooltip']);
             $data['title'] = Locales::getStringOrJSONLocale($a_attr['title']);
             
-            $locdata = Locales::ReadStringData($a_attr['id']);
+            $locdata = Locales::ReadData($a_attr['id']);
             $data['locales'] = $locdata['text'];
             
             Editor::AddData(DATA_MODULE_DATA, $data);

@@ -19,7 +19,6 @@
     define("DB_TBL_MODULE_TEMPLATE",        DB_PREFIX . "module_template");
     define("DB_TBL_MODULE",                 DB_PREFIX . "module");
     define("DB_TBL_DATA",                   DB_PREFIX . "data");
-    define("DB_TBL_STRINGS",                DB_PREFIX . "strings");
 	
 	// Static data
 	define("STATIC_URL",					"_cms/static/");

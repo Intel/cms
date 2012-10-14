@@ -31,20 +31,7 @@
         
         public static function InitLocale($a_locale) {
             self::$m_const_strings[$a_locale] = parse_ini_file(LOCALES_DIR . '/' . $a_locale . '.ini');
-            //self::LoadDBStrings($a_locale);
         }
-        
-        /*public static function LoadDBStrings($a_locale) {
-            $result = Database::Query("SELECT * FROM `" . DB_TBL_STRINGS . "` WHERE `locale` IN ('', '" . $a_locale . "')");
-            
-            if ($result->HasData()) {
-                do {
-                    $row = $result->GetRow();
-                    $id = $row['id'];
-                    self::$m_db_strings[$a_locale][$id] = $row;
-                } while ($result->NextRow());
-            }
-        }*/
         
         public static function SetUserLocale($a_locale = NULL) {
             if ($a_locale) {
@@ -93,7 +80,7 @@
         
         public static function LoadModuleDataById($a_key)
         {
-            $result = Database::Query("SELECT * FROM `cms_data` WHERE `owner` = 
+            $result = Database::Query("SELECT * FROM `" . DB_TBL_DATA . "` WHERE `owner` = 
                                         (SELECT `owner` FROM `cms_data` WHERE `id` = '" . $a_key . "')");
             
             if ($result->HasData()) {
