@@ -159,7 +159,7 @@ fieldset
 
 #inputs input
 {
-    background: #f1f1f1 url(http://www.red-team-design.com/wp-content/uploads/2011/09/login-sprite.png) no-repeat;
+    background: #f1f1f1 url(_cms/images/login-sprite.png) no-repeat;
     padding: 15px 15px 15px 30px;
     margin: 0 0 10px 0;
     width: 353px; /* 353 + 2 + 45 = 400 */
@@ -291,7 +291,6 @@ fieldset
     <fieldset id="actions">
         <input type="submit" id="submit" value="Log in">
     </fieldset>
-    <a href="http://www.red-team-design.com/slick-login-form-with-html5-css3" id="back">Back to article...</a>
 </form>
 
 </body>
