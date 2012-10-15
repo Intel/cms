@@ -53,6 +53,6 @@
     // jQuery Options
     define("JQUERY_VERSION",                "1.8.2");
     define("JQUERY_UI_VERSION",             "1.9.0");
-    define("JQUERY_UI_THEME",               "ui-lightness"); // ui-lightness, dark-hive
+    define("JQUERY_UI_THEME",               "dark-hive"); // ui-lightness, dark-hive
     
 ?>
