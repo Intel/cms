@@ -419,7 +419,7 @@
                             <script type="text/javascript" src="_cms/js/editor.js"></script>
                             <link rel="stylesheet" type="text/css" href="_cms/js/cleditor/jquery.cleditor.css" />
                             <script type="text/javascript" src="_cms/js/cleditor/jquery.cleditor.js"></script>
-                            <script type="text/javascript">var editorData = JSON.parse(\'' . json_encode(self::$m_data) . '\');</script>
+                            <script type="text/javascript">var editorData = JSON.parse(\'' . str_replace("\\", "\\\\", json_encode(self::$m_data)) . '\');</script>
                             ' . self::$m_extra_head;
             
             // Add
