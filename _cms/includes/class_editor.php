@@ -410,10 +410,10 @@
             $head = $heads[0];
             
             $head_html = '  <link rel="stylesheet" type="text/css" href="_cms/css/editor.css" media="all" />
-                            <link rel="stylesheet" type="text/css" href="_cms/css/ui-lightness/jquery-ui-1.8.21.custom.css" />
+                            <link rel="stylesheet" type="text/css" href="_cms/css/jQueryUI/' . JQUERY_UI_THEME . '/jquery-ui-' . JQUERY_UI_VERSION . '.custom.css" />
                             <link rel="stylesheet" type="text/css" href="_cms/css/tipsy.css" />
-                            <script type="text/javascript" src="_cms/js/jquery-1.7.2.min.js"></script>
-                            <script type="text/javascript" src="_cms/js/jquery-ui-1.8.21.custom.min.js"></script>
+                            <script type="text/javascript" src="_cms/js/jquery-' . JQUERY_VERSION . '.min.js"></script>
+                            <script type="text/javascript" src="_cms/js/jquery-ui-' . JQUERY_UI_VERSION . '.custom.min.js"></script>
                             <script type="text/javascript" src="_cms/js/jquery.jsrender.min.js"></script>
                             <script type="text/javascript" src="_cms/js/jquery.tipsy.js"></script>
                             <script type="text/javascript" src="_cms/js/editor.js"></script>

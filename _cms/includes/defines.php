@@ -50,4 +50,9 @@
     define("PLUGIN_DIR",                    "./_cms/plugins");
     define("PLUGIN_EXT",                    ".plugin.php");
     
+    // jQuery Options
+    define("JQUERY_VERSION",                "1.8.2");
+    define("JQUERY_UI_VERSION",             "1.9.0");
+    define("JQUERY_UI_THEME",               "ui-lightness"); // ui-lightness, dark-hive
+    
 ?>
