@@ -34,10 +34,9 @@ function GetImg(hash, w, h)
 
 var Plugin_input_img = {
     Generate: function(object_data) {
-        var tmpl = jQuery.templates('<label for="{{>name}}">{{>title}}</label></br> \
+        var tmpl = jQuery.templates('<label for="{{>name}}">{{>title}}</label> \
                                      <input type="file" title="Peržiūros failas bus automatiškai sumažintas iki {{>width}}x{{>height}} px"  class="text ui-widget-content ui-corner-all">\
-									 <span title="<img src=\'\' width=200 height=200>">Peržiūra</span><br/>\
-									 ');
+									 <span title="<img src=\'\' width=200 height=200>">Peržiūra</span>');
         
         // Render template
         var string = $(tmpl.render(object_data));

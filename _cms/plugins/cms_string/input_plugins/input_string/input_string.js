@@ -1,6 +1,6 @@
 var Plugin_input_string = {
     Generate: function(object_data) {
-        var tmpl = jQuery.templates('<label for="{{>name}}"><span style="float: left; margin-right: 5px;" class="ui-icon ui-icon-grip-diagonal-se"></span>{{>title}}</label></br> \
+        var tmpl = jQuery.templates('<label for="{{>name}}"><span style="float: left; margin-right: 5px;" class="ui-icon ui-icon-grip-diagonal-se"></span>{{>title}}</label> \
                                      <div class="editor-dialog-input-container"> \
                                         <span class="ui-icon ui-icon-pencil"></span> \
                                         <input type="text" size="{{>width}}" title="{{>tooltip}}"  class="text ui-widget-content ui-corner-all"> \

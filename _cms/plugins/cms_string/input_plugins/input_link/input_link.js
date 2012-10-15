@@ -1,6 +1,6 @@
 var Plugin_input_link = {
     Generate: function(link_data) {
-        var tmpl = jQuery.templates('<label><span style="float: left; margin-right: 5px;" class="ui-icon ui-icon-grip-diagonal-se"></span>{{>title}}</label></br> \
+        var tmpl = jQuery.templates('<label><span style="float: left; margin-right: 5px;" class="ui-icon ui-icon-grip-diagonal-se"></span>{{>title}}</label> \
                                      <div class="editor-dialog-input-container"> \
                                         <span class="ui-icon ui-icon-tag"></span> \
                                         <input type="text" name="link_title" title="{{>tooltip_title}}" class="ui-widget-content ui-corner-all"> \
