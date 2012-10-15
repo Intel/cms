@@ -13,9 +13,9 @@ var Plugin_input_string = {
         string.tipsy();
         
         if(object_data.datepicker) {
-            string.filter('input').datepicker();
-            string.filter('input').datepicker( "option", "dateFormat", "yy-mm-dd");
-            string.filter('input').tipsy({ gravity: 's' });
+            string.find('input').datepicker();
+            string.find('input').datepicker( "option", "dateFormat", "yy-mm-dd");
+            string.find('input').tipsy({ gravity: 's' });
         }
         
         // Initialize datatype if object is new
@@ -44,7 +44,7 @@ var Plugin_input_string = {
         var object_data = GetObjectData(string);
         
         // Save locale
-        var input = string.filter('input');
+        var input = string.find('input');
         object_data.locales[editorData.locales.current] = input.val();
         
         // Send all data, we'll process it in php
