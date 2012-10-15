@@ -322,7 +322,7 @@ function AddToolbarModule(moduleData) {
 	var container = $('.editor-toolbar-modules-container-' + moduleData.type);
 	
 	// append
-	var module = $('<div class="editor-toolbar-modules-module ui-state-default" data-mid="' + moduleData.id + '" data-type="' + moduleData.type + '">' + moduleData.name + '<button style="margin-left: 10px;"><span class="ui-icon ui-icon-trash" /></button></div>');
+	var module = $('<div class="editor-toolbar-modules-module ui-widget ui-widget-content" data-mid="' + moduleData.id + '" data-type="' + moduleData.type + '">' + moduleData.name + '<button style="margin-left: 10px;"><span class="ui-icon ui-icon-trash" /></button></div>');
 	container.children('div').append(module);
 	
 	// delete button
@@ -538,13 +538,13 @@ function InitModule(obj) {
 }
 
 function EditModule(id) {
-    var dialog = $('<div id="editor-dialog"><div id="editor-dialog-container" class="ui-state-default" style="padding: 10px"></div></div>');
+    var dialog = $('<div id="editor-dialog"><div id="editor-dialog-container" class="ui-widget ui-widget-content" style="padding: 10px"></div></div>');
     var dialogContainer = dialog.find('#editor-dialog-container');
     var module = $('div[data-moduleid="' + id + '"]:first');
     var moduleData = module.data('json_data');
     
     // Add locale selection
-    var locale_html = '<div id="editor-locales" class="ui-state-highlight ui-corner-all" style="padding: 5px;">';
+    var locale_html = '<div id="editor-locales" class="ui-widget ui-widget-content ui-corner-all" style="padding: 5px;">';
     for (var itr = 0; itr < editorData.locales.list.length; itr++)
     {
         var locale = editorData.locales.list[itr];

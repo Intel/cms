@@ -370,16 +370,16 @@
         
         public static function GenerateToolBar($a_doc) {
             $toolbar_html = '<div id="editor-toolbar-container">
-                                <div id="editor-toolbar" class="ui-state-default ui-corner-bottom">
+                                <div id="editor-toolbar" class="ui-widget ui-widget-content ui-corner-bottom">
                                     <div id="editor-toolbar-content">
-                                        <div id="editor-toolbar-actions" class="ui-state-default ui-corner-all"></div><br/>
-                                        <div id="editor-toolbar-pages" class="ui-state-default ui-corner-all"></div><br/>
-                                        <div id="editor-toolbar-modules" class="ui-state-default ui-corner-all">
+                                        <div id="editor-toolbar-actions" class="ui-widget ui-widget-content ui-corner-all"></div><br/>
+                                        <div id="editor-toolbar-pages" class="ui-widget ui-widget-content ui-corner-all"></div><br/>
+                                        <div id="editor-toolbar-modules" class="ui-widget ui-widget-content ui-corner-all">
                                             <div id="editor-toolbar-modules-content">
                                             </div>
                                         </div>
                                     </div>
-                                    <div id="editor-toolbar-tempeklis" class="ui-state-default ui-corner-bottom"><span class="ui-icon ui-icon-wrench"></span></div>
+                                    <div id="editor-toolbar-tempeklis" class="ui-widget ui-widget-content ui-corner-bottom"><span class="ui-icon ui-icon-wrench"></span></div>
                                 </div>
                             </div>';
             

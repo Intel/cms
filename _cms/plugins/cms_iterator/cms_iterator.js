@@ -54,7 +54,7 @@ var Plugin_cms_iterator = {
     },
     
     CreateContent: function(data) {
-        var container = $('<li class="ui-state-default"><span style="float: right;" class="ui-icon ui-icon-closethick" onclick="$(this).parent().remove();"></span></li>');
+        var container = $('<li class="ui-widget ui-widget-content"><span style="float: right;" class="ui-icon ui-icon-closethick" onclick="$(this).parent().remove();"></span></li>');
         GenerateEditableContent(data, container);
         return container;
     }
