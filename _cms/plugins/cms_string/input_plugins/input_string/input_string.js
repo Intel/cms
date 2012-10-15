@@ -10,7 +10,7 @@ var Plugin_input_string = {
         var string = $(tmpl.render(object_data));
         
         // Add Tooltips
-        string.tipsy();
+        string.find('input').tipsy();
         
         if(object_data.datepicker) {
             string.find('input').datepicker();
