@@ -16,6 +16,7 @@ var Plugin_input_richtext = {
 		
 		// Load richtext editor
         string.filter("textarea").bind("showup", function() {
+            $.cleditor.defaultOptions.controls = "bold italic underline strikethrough | color highlight removeformat | bullets numbering | alignleft center | undo redo | link unlink | source";
             $(this).cleditor();
         });
 		  
