@@ -1,4 +1,6 @@
 <?
+    include("../includes/defines.php");
+    
 	if (!$_FILES['image'])
 		exit('no file');
 	
@@ -19,7 +21,9 @@
 		$filehash = md5(uniqid());
 	} while (file_exists('images/' . $filehash . '.jpg'));
 	
-	$image->writeImage('images/' . $filehash . '.jpg');
+    $image->setCompression(Imagick::COMPRESSION_JPEG);
+    $image->setCompressionQuality(STATIC_IMG_QUALITY); 
+    $image->writeImage('images/' . $filehash . '.jpg');
 	
 	$response = array();
 	$response['hash'] = $filehash;

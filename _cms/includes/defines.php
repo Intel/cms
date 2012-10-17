@@ -23,6 +23,7 @@
 	// Static data
 	define("STATIC_URL",					"_cms/static/");
 	define("STATIC_IMG_EXT",				".jpg");
+    define("STATIC_IMG_QUALITY",            90); // 0-100
     
     // Compiler
     define("COMPILER_TEMPLATES_DIR",        "./_cms/templates");
