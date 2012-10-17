@@ -224,14 +224,14 @@
         private function HashMe($a_password, &$a_salt) {
             if ($a_salt == '') {
                 // Generate Salt
-                $salt = substr(hash('sha512',uniqid(rand(), true).$key.microtime()), 0, SALT_LENGTH);
+                $a_salt = substr(hash('sha512',uniqid(rand(), true).$key.microtime()), 0, SALT_LENGTH);
             } else {
                 // Use Existing One
-                $salt = substr($a_salt, 0, SALT_LENGTH);
+                $a_salt = substr($a_salt, 0, SALT_LENGTH);
             }
             
             // Hash
-            return hash('sha512', ($salt . $a_password));
+            return hash('sha512', ($a_salt . $a_password));
         }
         //
         // ################################################################################
