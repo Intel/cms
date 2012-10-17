@@ -16,7 +16,7 @@
 	$width = (isset($_GET['w']) ? $_GET['w'] : 0);
 	$height = (isset($_GET['h']) ? $_GET['h'] : 0);
     
-    $width = ($width > 2000 ? 2000 : $width);
+    $width = ($width > 3200 ? 3200 : $width);
     $height = ($height > 2000 ? 2000 : $height);
     
 	if ($width || $height) {
