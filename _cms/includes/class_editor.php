@@ -49,16 +49,24 @@
 			print 'ok';
 		}
 		
-		public static function CreatePage($a_data) {
-			if (!is_file(COMPILER_TEMPLATES_DIR . '/' . $a_data['template'] . ".tmpl"))
-				die("Editor::CreatePage: Template not found: " . $a_data['template']);
+		public static function UpdatePage($a_data) {
+			$name = Database::Escape(serialize($a_data['name']));
 			
-			$template = Database::Escape($a_data['template']);
-			$name = serialize($a_data['name']);
+            // Update page if we have id, else add new one
+            if ($a_data['id']) {
+                $id = Database::Escape($a_data['id']);
+                Database::Query("UPDATE `" . DB_TBL_PAGES . "` SET `name` = '" . $name . "' WHERE `id` = '" . $id . "'");
+            } else {
+                if (!is_file(COMPILER_TEMPLATES_DIR . '/' . $a_data['template'] . ".tmpl"))
+                    die("Editor::CreatePage: Template not found: " . $a_data['template']);
+                
+                $template = Database::Escape($a_data['template']);
+                
+                Database::Query("INSERT INTO `" . DB_TBL_PAGES . "` (`name`, `template`) VALUES ('" . $name . "', '" . $template . "')");
+            }
 			
-			Database::Query("INSERT INTO `" . DB_TBL_PAGES . "` (`name`, `template`) VALUES ('" . $name . "', '" . $template . "')");
-			
-			$id = Database::GetLastIncrId();
+            if (!$id)
+                $id = Database::GetLastIncrId();
 			
 			$page_data = array();
 			$page_data['id'] = $id;

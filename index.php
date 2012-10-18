@@ -60,12 +60,12 @@
 					print Editor::DeleteModule($_POST['module_id']);
 					exit;
 				// Saves page and module placing
-                case 'page_update':
+                case 'page_save':
                     Editor::SavePage($_POST['page_data']);
                     exit;
 				// Create new page
-				case 'page_create':
-					Editor::CreatePage($_POST['data']);
+				case 'page_update':
+					Editor::UpdatePage($_POST['data']);
                     exit;
 				// Delete page
 				case 'page_delete':
