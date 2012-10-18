@@ -188,7 +188,7 @@ function InitToolbar() {
 	
     // Add page button
     $('#editor-toolbar-pages').append('<button style="margin: 5px; float: right;" id="editor-button-add-page">' + GetLocaleString('EDITOR_ADD_NEW_PAGE') + '</button>');
-    $('#editor-button-add-page').button({ icons: {primary:'ui-icon-plusthick'}}).click(function() { AddPageDialog(); });
+    $('#editor-button-add-page').button({ icons: {primary:'ui-icon-plusthick'}}).click(function() { AddUpdatePageDialog(0); });
     
     // ACTION BUTTONS
     // Logout
@@ -201,7 +201,7 @@ function InitToolbar() {
 	$('#editor-toolbar-actions').append('<button style="margin-left: 5px; margin-top: 5px;" id="editor-button-set-default-page">' + GetLocaleString('EDITOR_SET_DEFAULT_PAGE') + '</button>');
     $('#editor-button-set-default-page').button().click(function() { SetDefaultPage(editorData.page.id); });
     $('#editor-toolbar-actions').append('<button style="margin-left: 5px; margin-top: 5px;" id="editor-button-page-settings">' + GetLocaleString('EDITOR_PAGE_SETTINGS') + '</button>');
-    $('#editor-button-page-settings').button().click(function() { alert('unfinished'); });
+    $('#editor-button-page-settings').button().click(function() { AddUpdatePageDialog(editorData.page.id); });
     
     // module container
     
@@ -410,21 +410,25 @@ function DeleteModule(id) {
     });
 }
 
-function AddPageDialog() {
-    function AddPage(name, template) {
+function AddUpdatePageDialog(id) {
+    function AddUpdatePage(id, name, template) {
         var page_data = new Object;
+        page_data.id = id;
         page_data.name = name;
         page_data.template = template;
         console.log(page_data);
         $.ajax({
             type: "POST",
             url: "index.php",
-            data: { action: 'page_create', data: page_data},
+            data: { action: 'page_update', data: page_data},
         }).done(function( msg ) {
             var pageData = JSON.parse(msg);
-            
             editorData.page.pages[pageData.id] = pageData;
             
+            // Remove old page from toolbar
+            $('#editor-button-page-' + pageData.id).remove();
+            
+            // Add new
             AddToolbarPage(pageData);
         });
     }
@@ -432,7 +436,10 @@ function AddPageDialog() {
     var dialog = $('<div id="editor-dialog"></div>');
 	
 	// title
-	dialog.attr('title', GetLocaleString('EDITOR_DIALOG_ADD_PAGE_TITLE'));
+    if (id)
+        dialog.attr('title', GetLocaleString('EDITOR_DIALOG_UPDATE_PAGE_TITLE', id));
+    else
+        dialog.attr('title', GetLocaleString('EDITOR_DIALOG_ADD_PAGE_TITLE'));
     
     // Add locale selection
     var locale_html = '<div id="editor-locales" class="ui-state-highlight ui-corner-all" style="padding: 5px;">';
@@ -447,8 +454,15 @@ function AddPageDialog() {
     locale_html += '</div><br/>';
     dialog.append(locale_html);
 	
-	dialog.append('<div class="ui-state-default" style="padding: 10px"><fieldset><label>' + GetLocaleString('EDITOR_DIALOG_ADD_PAGE_NAME') + '</label><br/><input type="text" name="page_name"/></fieldset><br/><fieldset><label>' + GetLocaleString('EDITOR_DIALOG_ADD_PAGE_SELECT_TEMPLATE') + '</label><br/><select></select></fieldset></div>');
-	
+	dialog.append('<div class="ui-widget ui-widget-content" id="editor-dialog-container" style="padding: 10px"><fieldset><label>' + GetLocaleString('EDITOR_DIALOG_ADD_PAGE_NAME') + '</label><br/><input type="text" name="page_name"/></fieldset></div>');
+	console.log(editorData.page.pages[id]);
+    // Set initial name
+    if (id) {
+        var page_name = dialog.find('input[name="page_name"]');
+        page_name.val(editorData.page.pages[id].name[editorData.locales.default]);
+        page_name.data("locs", editorData.page.pages[id].name);
+    }
+    
     dialog.find('#editor-locales').buttonset();
     var loc_select = dialog.find('#editor-locales input');
     loc_select.change(function() {
@@ -470,13 +484,14 @@ function AddPageDialog() {
     });
     editorData.locales.current = editorData.locales.default;
     
-	var select = dialog.find('select');
-	
-	jQuery.each(editorData.templates.page, function(index, template) {
-		select.append('<option value="' + template + '">' + template + '</option>');
-	});
-	
-    //dialog.find('input').tipsy();
+    // Template selection is only available when creating new page
+    if (!id) {
+        dialog.find('#editor-dialog-container').append('<br/><fieldset><label>' + GetLocaleString('EDITOR_DIALOG_ADD_PAGE_SELECT_TEMPLATE') + '</label><br/><select></select></fieldset>');
+        var select = dialog.find('select');
+        jQuery.each(editorData.templates.page, function(index, template) {
+            select.append('<option value="' + template + '">' + template + '</option>');
+        });
+    }
     
     // Open
     dialog.dialog({ modal: true,
@@ -490,7 +505,10 @@ function AddPageDialog() {
                   
     var buttons = new Object();
     buttons[GetLocaleString('COMMON_CANCEL')] = function() { dialog.remove(); };
-    buttons[GetLocaleString('COMMON_CREATE')] = function() { loc_select.trigger('change'); AddPage(dialog.find('input[name="page_name"]').data('locs'), dialog.find('select').val()); $('#editor-toolbar-tempeklis').trigger('click'); dialog.remove(); };
+    var buttonname = GetLocaleString('COMMON_CREATE');
+    if (id)
+        buttonname = GetLocaleString('COMMON_SAVE');
+    buttons[buttonname] = function() { loc_select.trigger('change'); AddUpdatePage(id, dialog.find('input[name="page_name"]').data('locs'), dialog.find('select').val()); $('#editor-toolbar-tempeklis').trigger('click'); dialog.remove(); };
     dialog.dialog("option", "buttons", buttons);
 }
 
@@ -891,7 +909,7 @@ function SavePage() {
     $.ajax({
         type: "POST",
         url: "index.php",
-        data: { action: 'page_update', page_data: data },
+        data: { action: 'page_save', page_data: data },
     }).done(function( msg ) {
         MessageDialog(GetLocaleString('EDITOR_DIALOG_PAGE_SAVED_TITLE'), 
 					'<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 0 0;"></span>' + GetLocaleString('EDITOR_DIALOG_PAGE_SAVED_BODY'));
