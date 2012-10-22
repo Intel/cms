@@ -17,6 +17,7 @@
     if (file_exists($file_resized)) {
         header("Content-Type: image/jpeg");
         readfile($file_resized);
+        exit();
     }
     
 	// check if image exists
