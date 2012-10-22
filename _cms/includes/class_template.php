@@ -110,6 +110,7 @@
 
             $this->children[$key]->setParent();
             unset($this->children[$key]);
+            $this->children = array_values($this->children);
             return true;
         }
 
