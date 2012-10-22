@@ -15,10 +15,8 @@
     $file_resized = 'images/' . $hash . '-' . $width . 'x' . $height . '.jpg';
 	
     if (file_exists($file_resized)) {
-        $img = new Imagick($file_resized);
-        // print
         header("Content-Type: image/jpeg");
-        print $img->getImageBlob();
+        readfile($file_resized);
     }
     
 	// check if image exists
