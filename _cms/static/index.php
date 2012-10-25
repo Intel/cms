@@ -23,17 +23,19 @@
 	// check if image exists
 	if (!file_exists($file))
 		die('not found');
-	
-	$img = new Imagick($file);
     
 	if ($width || $height) {
+        $img = new Imagick($file);
+        
         $img->cropThumbnailImage($width, $height);
         $img->writeImage($file_resized);
-	}
-
-	// print
-	header("Content-Type: image/jpeg");
-	print $img->getImageBlob();
-	
-	$img->destroy();
+        
+        header("Content-Type: image/jpeg");
+        print $img->getImageBlob();
+        
+        $img->destroy();
+	} else {
+        header("Content-Type: image/jpeg");
+        readfile($file);
+    }
 ?>
