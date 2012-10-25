@@ -14,13 +14,23 @@
             $strings = $doc->getElementsByTag('CMS_STRING');
             
             foreach ($strings as $string) {
-                // Process data in plugin
-                $plugin = $this->m_pluginmgr->GetPlugin("input_" . $string->getAttribute('type'));
+                $html = "";
                 
-                if (!$plugin)
-                    die('Plugin_cms_string::On_Editor_LoadedPageTemplate(): Plugin type "' . $string->getAttribute('type') . '" not found.');
-                
-                $html = $plugin->GetContent($string->attributes());
+                switch($string->getAttribute('type'))
+                {
+                    case "const":
+                        $html = Locales::GetConstString($string->getAttribute("name"));
+                        break;
+                    default:
+                        // Process data in plugin
+                        $plugin = $this->m_pluginmgr->GetPlugin("input_" . $string->getAttribute('type'));
+                        
+                        if (!$plugin)
+                            die('Plugin_cms_string::On_Editor_LoadedPageTemplate(): No valid generators found for string type "' . $string->getAttribute('type') . '".');
+                        
+                        $html = $plugin->GetContent($string->attributes());
+                        break;
+                }
                 
                 $string->replaceWith(new Template_TextNode($html));
             }
