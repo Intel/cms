@@ -215,7 +215,7 @@
             print json_encode(array("moduleid" => self::$m_moduleid, "content" => $doc->getHtml(), "module_data" => self::$m_data['module_data']));
             
             // Page needs recompiling
-            $result = Database::Query("SELECT `pageid` FROM `" . DB_TBL_MODULE . "` WHERE `id` = '" . self::$m_moduleid . "' GROUP BY `pageid`");
+            $result = Database::Query("SELECT `pageid` FROM `" . DB_TBL_MODULE . "` WHERE `id` = '" . self::$m_moduleid . "' OR `flags` = '_global' GROUP BY `pageid`");
             if ($result->HasData()) {
                 do {
                     Database::Query("UPDATE `" . DB_TBL_PAGES . "` SET `compiled` = '' WHERE `id` = '" . $result->GetValue('pageid') . "'");
