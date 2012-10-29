@@ -273,11 +273,7 @@
             $this->m_template = $this->m_node->getAttribute("template");
             $this->m_name = $this->m_node->getAttribute("name");
             $this->m_flags = $this->m_node->getAttribute("flags");
-            
-            if ($this->m_flags == "_global")
-                $this->m_pageid = "0";
-            else
-                $this->m_pageid = $a_pageid;   
+            $this->m_pageid = $a_pageid;   
             
             $query = "SELECT `tmpl`.`id` FROM `" . DB_TBL_MODULE_TEMPLATE . "` AS `tmpl` LEFT JOIN `" . DB_TBL_MODULE . "` AS `module` ON `tmpl`.`id` = `module`.`id` WHERE `tmpl`.`template` = '" . $this->m_template . "' AND `tmpl`.`name` = '" . $this->m_name . "' AND `module`.`pageid` = '" . $this->m_pageid . "' AND `module`.`container` = 'global'";
             $result = Database::Query($query);
