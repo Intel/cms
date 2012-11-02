@@ -303,6 +303,10 @@
                 // Escape character
                 if ($str[$itr] === TEMPLATE_ESCAPE_CHARACTER) {
                     ++$itr;
+                    if ($tag_open)
+                        $tag .= $str[$itr];
+                    else
+                        $tag_text .= $str[$itr];
                     continue;
                 }
                 
