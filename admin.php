@@ -20,6 +20,7 @@
 <html>
 <head>
 <title>Admin Login</title>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
 <style>
 
 html, body
@@ -280,6 +281,8 @@ fieldset
 </head>
 
 <body>
+
+' . (isset($_POST['username']) ? '<script type="text/javascript">alert("Neteisingai suvesti prisijungimo duomenys. Prašome bandydi dar kartą.");</script>' : '') . '
 
 <form id="login" action="admin.php" method="POST">
     <h1>Log In</h1>
