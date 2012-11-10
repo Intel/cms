@@ -28,7 +28,13 @@ var Plugin_input_link = {
                 select.append('<option id="' + page.id + '">' + page.name[editorData.locales.default] + '</option>');
             });
             select.change(function() {
-                input.val('?page=' + $(this).find("option:selected").attr("id"));
+                var page = editorData.page.pages[$(this).find("option:selected").attr("id")];
+                
+                input.val('?page=' + page.id);
+                string.find('input[name="link_title"]').val(page.name[editorData.locales.current]);
+                
+                // Update other locales (both objects are arrays)
+                link_data.link_title = page.name;
             });
         });
         
