@@ -8,9 +8,9 @@
     
     // Database
     define("DB_HOST",                       "localhost");
-    define("DB_USER",                       "ten-games_league");
-    define("DB_PASS",                       "dSg31Hs6");
-    define("DB_DATABASE",                   "www_ten-games_league");
+    define("DB_USER",                       "user");
+    define("DB_PASS",                       "pass");
+    define("DB_DATABASE",                   "db");
     define("DB_PREFIX",                     "cms_");
     // Tables
     define("DB_TBL_ACCOUNT",                DB_PREFIX . "account");
