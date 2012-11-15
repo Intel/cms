@@ -413,22 +413,36 @@
         }
         
         public static function InsertHeadContent($a_doc) {
+            // jQuery
+            Editor::LoadCSS("_cms/css/jQueryUI/" . JQUERY_UI_THEME . "/jquery-ui-" . JQUERY_UI_VERSION . ".custom.css");
+            Editor::LoadJS("_cms/js/jquery-" . JQUERY_VERSION . ".min.js");
+            Editor::LoadJS("_cms/js/jquery-ui-" . JQUERY_UI_VERSION . ".custom.min.js");
+            
+            // JS Render
+            Editor::LoadJS("_cms/js/jquery.jsrender.min.js");
+            
+            // CLEditor
+            Editor::LoadCSS("_cms/js/cleditor/jquery.cleditor.css");
+            Editor::LoadJS("_cms/js/cleditor/jquery.cleditor.js");
+            
+            // Tipsy
+            Editor::LoadCSS("_cms/css/tipsy.css");
+            Editor::LoadJS("_cms/js/jquery.tipsy.js");
+            
+            // KendoUI
+            Editor::LoadCSS("_cms/css/kendo/kendo.common.min.css");
+            Editor::LoadCSS("_cms/css/kendo/kendo." . KENDOUI_THEME . ".min.css");
+            Editor::LoadJS("_cms/js/kendo.web.min.js");
+            
+            // Editor
+            Editor::LoadCSS("_cms/css/editor.css");
+            Editor::LoadJS("_cms/js/editor.js");
+            
             // Get <HEAD> tag
             $heads = $a_doc->getElementsByTag('CMS_HEAD');
             $head = $heads[0];
             
-            $head_html = '  <link rel="stylesheet" type="text/css" href="_cms/css/editor.css" media="all" />
-                            <link rel="stylesheet" type="text/css" href="_cms/css/jQueryUI/' . JQUERY_UI_THEME . '/jquery-ui-' . JQUERY_UI_VERSION . '.custom.css" />
-                            <link rel="stylesheet" type="text/css" href="_cms/css/tipsy.css" />
-                            <script type="text/javascript" src="_cms/js/jquery-' . JQUERY_VERSION . '.min.js"></script>
-                            <script type="text/javascript" src="_cms/js/jquery-ui-' . JQUERY_UI_VERSION . '.custom.min.js"></script>
-                            <script type="text/javascript" src="_cms/js/jquery.jsrender.min.js"></script>
-                            <script type="text/javascript" src="_cms/js/jquery.tipsy.js"></script>
-                            <script type="text/javascript" src="_cms/js/editor.js"></script>
-                            <link rel="stylesheet" type="text/css" href="_cms/js/cleditor/jquery.cleditor.css" />
-                            <script type="text/javascript" src="_cms/js/cleditor/jquery.cleditor.js"></script>
-                            <script type="text/javascript">var editorData = JSON.parse(\'' . str_replace("\\", "\\\\", json_encode(self::$m_data)) . '\');</script>
-                            ' . self::$m_extra_head;
+            $head_html = '<script type="text/javascript">var editorData = JSON.parse(\'' . str_replace("\\", "\\\\", json_encode(self::$m_data)) . '\');</script>' . self::$m_extra_head;
             
             // Add
             $head->addChild(new Template_TextNode($head_html));
