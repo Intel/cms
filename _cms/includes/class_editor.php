@@ -11,6 +11,7 @@
         public static $m_pageid;
         public static $m_moduleid;
         public static $m_extra_head;
+        public static $m_scripts = array();
         
 		public static function CreateModule($a_type, $a_template, $a_name) {
 			if (!is_file(COMPILER_TEMPLATES_DIR . "/modules/" . $a_type . "/" . $a_template . ".tmpl"))
@@ -291,6 +292,31 @@
             
             Content::$m_pagename = unserialize($result->GetValue('name'));
             
+            // jQuery
+            Editor::LoadCSS("_cms/css/jQueryUI/" . JQUERY_UI_THEME . "/jquery-ui-" . JQUERY_UI_VERSION . ".custom.css");
+            Editor::LoadJS("_cms/js/jquery-" . JQUERY_VERSION . ".min.js", 5);
+            Editor::LoadJS("_cms/js/jquery-ui-" . JQUERY_UI_VERSION . ".custom.min.js", 4);
+            
+            // JS Render
+            Editor::LoadJS("_cms/js/jquery.jsrender.min.js", 4);
+            
+            // CLEditor
+            Editor::LoadCSS("_cms/js/cleditor/jquery.cleditor.css");
+            Editor::LoadJS("_cms/js/cleditor/jquery.cleditor.js", 4);
+            
+            // Tipsy
+            Editor::LoadCSS("_cms/css/tipsy.css");
+            Editor::LoadJS("_cms/js/jquery.tipsy.js", 4);
+            
+            // KendoUI
+            Editor::LoadCSS("_cms/css/kendo/kendo.common.min.css");
+            Editor::LoadCSS("_cms/css/kendo/kendo." . KENDOUI_THEME . ".min.css");
+            Editor::LoadJS("_cms/js/kendo.web.min.js", 4);
+            
+            // Editor
+            Editor::LoadCSS("_cms/css/editor.css");
+            Editor::LoadJS("_cms/js/editor.js", 3);
+            
             $compiler = new Compiler();
             $doc = $compiler->CompilePage(self::$m_pageid, COMPILER_MODE_EDITOR);
             
@@ -398,11 +424,14 @@
             $body->addChild(new Template_TextNode($toolbar_html));
         }
         
-        public static function LoadJS($a_file) {
+        public static function LoadJS($a_file, $a_priority = 1) {
             if (!file_exists($a_file))
                 die('Editor::LoadJS(): File "' . $a_file . '" not found');
             
-            self::$m_extra_head .= '<script type="text/javascript" src="' . GetRelativePath($a_file) . '"></script>';
+            if ($a_priority < 1 || $a_priority > 9)
+                die("Editor::LoadJS(): Wrong priority value '" . $a_priority . "'");
+            
+            self::$m_scripts[$a_priority] .= '<script type="text/javascript" src="' . GetRelativePath($a_file) . '"></script>';
         }
         
         public static function LoadCSS($a_file) {
@@ -413,30 +442,9 @@
         }
         
         public static function InsertHeadContent($a_doc) {
-            // jQuery
-            Editor::LoadCSS("_cms/css/jQueryUI/" . JQUERY_UI_THEME . "/jquery-ui-" . JQUERY_UI_VERSION . ".custom.css");
-            Editor::LoadJS("_cms/js/jquery-" . JQUERY_VERSION . ".min.js");
-            Editor::LoadJS("_cms/js/jquery-ui-" . JQUERY_UI_VERSION . ".custom.min.js");
-            
-            // JS Render
-            Editor::LoadJS("_cms/js/jquery.jsrender.min.js");
-            
-            // CLEditor
-            Editor::LoadCSS("_cms/js/cleditor/jquery.cleditor.css");
-            Editor::LoadJS("_cms/js/cleditor/jquery.cleditor.js");
-            
-            // Tipsy
-            Editor::LoadCSS("_cms/css/tipsy.css");
-            Editor::LoadJS("_cms/js/jquery.tipsy.js");
-            
-            // KendoUI
-            Editor::LoadCSS("_cms/css/kendo/kendo.common.min.css");
-            Editor::LoadCSS("_cms/css/kendo/kendo." . KENDOUI_THEME . ".min.css");
-            Editor::LoadJS("_cms/js/kendo.web.min.js");
-            
-            // Editor
-            Editor::LoadCSS("_cms/css/editor.css");
-            Editor::LoadJS("_cms/js/editor.js");
+            // Add scripts from array
+            for ($itr = 9; $itr > 0; $itr--)
+                self::$m_extra_head .= self::$m_scripts[$itr];
             
             // Get <HEAD> tag
             $heads = $a_doc->getElementsByTag('CMS_HEAD');
