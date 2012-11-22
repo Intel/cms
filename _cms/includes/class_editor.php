@@ -118,15 +118,17 @@
         
         public static function GeneratePageData() {
             $page_data = array();
-            $page_data['id'] = self::$m_pageid;
-            $page_data['pages'] = array();
+            $page_data['ID'] = self::$m_pageid;
+            $page_data['Pages'] = array();
             
             $result = Database::Query("SELECT `id`, `name`, `template`, `default` FROM `" . DB_TBL_PAGES . "`");
             
             do {
                 $row = $result->GetRow();
-                $page_data['pages'][$row['id']] = $row;
-                $page_data['pages'][$row['id']]['name'] = unserialize($row['name']);
+                $page_data['Pages'][$row['id']]['ID'] = $row['id'];
+                $page_data['Pages'][$row['id']]['Name'] = unserialize($row['name']);
+                $page_data['Pages'][$row['id']]['Template'] = $row['template'];
+                $page_data['Pages'][$row['id']]['Default'] = $row['default'];
             } while ($result->NextRow());
             
             self::AddData(DATA_PAGE, $page_data);
@@ -308,6 +310,9 @@
             Editor::LoadCSS("_cms/css/tipsy.css");
             Editor::LoadJS("_cms/js/jquery.tipsy.js", 4);
             
+            // jQuery Cookies
+            Editor::LoadJS("_cms/js/jquery.cookie.js", 4);
+            
             // KendoUI
             Editor::LoadCSS("_cms/css/kendo/kendo.common.min.css");
             Editor::LoadCSS("_cms/css/kendo/kendo." . KENDOUI_THEME . ".min.css");
@@ -318,6 +323,7 @@
             //Editor::LoadJS("_cms/js/editor.js", 3);
             Editor::LoadJS("_cms/js/cms.core.js", 3);
             Editor::LoadJS("_cms/js/cms.comm.js", 2);
+            Editor::LoadJS("_cms/js/cms.locales.js", 2);
             Editor::LoadJS("_cms/js/cms.pluginsystem.js", 2);
             Editor::LoadJS("_cms/js/cms.toolbar.js", 2);
             Editor::LoadCSS("_cms/css/cms.toolbar.css");
@@ -337,12 +343,14 @@
             foreach (Locales::$m_locales as $locale)
             {
                 $loc_data = array();
-                $loc_data['name'] = $locale;
-                $loc_data['ico'] = Locales::GetConstString('ICO', $locale);
+                $loc_data['Name'] = $locale;
+                $loc_data['ICO'] = Locales::GetConstString('ICO', $locale);
                 $locale_list[] = $loc_data;
             }
 			
-            self::AddData(DATA_LOCALES, array('default' => Locales::$m_locale, 'list' => $locale_list));
+            self::AddData(DATA_LOCALES, array(  'Default' => LOCALES_DEFAULT,
+                                                'Current' => Locales::$m_locale, 
+                                                'List' => $locale_list));
             self::AddData(DATA_STRINGS, Locales::$m_const_strings[Locales::$m_locale]);
             self::GeneratePageData();
 			self::GenerateModulesData();
@@ -379,25 +387,25 @@
             switch ($a_type)
             {
                 case DATA_CONTAINER:
-                    self::$m_data['containers'][] = $a_data;
+                    self::$m_data['Containers'][] = $a_data;
                     break;
                 case DATA_MODULE:
-                    self::$m_data['modules'][$a_data['id']] = $a_data;
+                    self::$m_data['Modules'][$a_data['id']] = $a_data;
                     break;
                 case DATA_MODULE_DATA:
-                    self::$m_data['module_data'][$a_data['ownerid']][] = $a_data;
+                    self::$m_data['ModuleData'][$a_data['ownerid']][] = $a_data;
                     break;
                 case DATA_PAGE:
-                    self::$m_data['page'] = $a_data;
+                    self::$m_data['Page'] = $a_data;
                     break;
                 case DATA_LOCALES:
-                    self::$m_data['locales'] = $a_data;
+                    self::$m_data['Locales'] = $a_data;
                     break;
                 case DATA_STRINGS:
-                    self::$m_data['strings'] = $a_data;
+                    self::$m_data['Strings'] = $a_data;
                     break;
 				case DATA_TEMPLATES:
-					self::$m_data['templates'] = $a_data;
+					self::$m_data['Templates'] = $a_data;
 					break;
                 case DATA_JAVASCRIPT:
                     self::$m_extra_head .= '<script type="text/javascript" src="' . $a_data . '"></script>';
