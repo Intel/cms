@@ -1,4 +1,10 @@
-var Plugin_input_richtext = {
+CMS.PluginSystem.LoadPlugin("input_richtext", {
+    PluginInit: function(Hooks) {
+        Hooks["EditableObject_Generate"] = this.Generate;
+        Hooks["EditableObject_LoadLocale"] = this.LoadLocale;
+        Hooks["EditableObject_Save"] = this.Save;
+    },
+    
     Generate: function(object_data) {
         var tmpl = jQuery.templates('<label for="{{>name}}">{{>title}}</label></br> \
 									 <textarea id="richtext_box"></textarea> \
@@ -53,8 +59,4 @@ var Plugin_input_richtext = {
         // Send all data, we'll process it in php
         return object_data;
     }
-};
-
-PluginMgr.Hook("EditableObject_Generate", Plugin_input_richtext.Generate, "input_richtext");
-PluginMgr.Hook("EditableObject_LoadLocale", Plugin_input_richtext.LoadLocale, "input_richtext");
-PluginMgr.Hook("EditableObject_Save", Plugin_input_richtext.Save, "input_richtext");
+});

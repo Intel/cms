@@ -1,4 +1,9 @@
-var Plugin_cms_iterator = {
+CMS.PluginSystem.LoadPlugin("iterator", {
+    PluginInit: function(Hooks) {
+        Hooks["EditableObject_Generate"] = this.Generate;
+        Hooks["EditableObject_Save"] = this.Save;
+    },
+    
     Generate: function(object_data) {
         var iterator = $('<ul class="editor-iterator"></ul>');
         
@@ -58,7 +63,4 @@ var Plugin_cms_iterator = {
         GenerateEditableContent(data, container);
         return container;
     }
-};
-
-PluginMgr.Hook("EditableObject_Generate", Plugin_cms_iterator.Generate, "iterator");
-PluginMgr.Hook("EditableObject_Save", Plugin_cms_iterator.Save, "iterator");
+});

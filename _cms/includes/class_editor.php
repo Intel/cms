@@ -348,7 +348,7 @@
 			self::GenerateModulesData();
             
             self::InsertHeadContent($doc);
-            self::GenerateToolBar($doc);
+            //self::GenerateToolBar($doc);
             
             // Title
             Content::AddTitle($doc, Locales::GetConstString("PAGE_TITLE", NULL, Content::$m_pagename[Locales::$m_locale]));

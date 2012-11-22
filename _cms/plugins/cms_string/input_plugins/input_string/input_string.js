@@ -1,4 +1,10 @@
-var Plugin_input_string = {
+CMS.PluginSystem.LoadPlugin("input_string", {
+    PluginInit: function(Hooks) {
+        Hooks["EditableObject_Generate"] = this.Generate;
+        Hooks["EditableObject_LoadLocale"] = this.LoadLocale;
+        Hooks["EditableObject_Save"] = this.Save;
+    },
+    
     Generate: function(object_data) {
         var tmpl = jQuery.templates('<label for="{{>name}}"><span style="float: left; margin-right: 5px;" class="ui-icon ui-icon-grip-diagonal-se"></span>{{>title}}</label> \
                                      <div class="editor-dialog-input-container"> \
@@ -50,8 +56,4 @@ var Plugin_input_string = {
         // Send all data, we'll process it in php
         return object_data;
     }
-};
-
-PluginMgr.Hook("EditableObject_Generate", Plugin_input_string.Generate, "input_string");
-PluginMgr.Hook("EditableObject_LoadLocale", Plugin_input_string.LoadLocale, "input_string");
-PluginMgr.Hook("EditableObject_Save", Plugin_input_string.Save, "input_string");
+});

@@ -10,25 +10,8 @@ CMS.PluginSystem = {
             this.hooks[this.types[itr]] = new Array;
         }
         
-        // Hooks
-        jQuery.each(this.Plugins, function(name, plugins) {
-            CMS.OutDebug("CMS.PluginSystem.Init(): Loading plugin '" + name + "'");
-            
-            // Init Hooks Array
-            var Hooks = new Array;
-            
-            if (!plugin.PluginInit)
-                return CMS.OutError("CMS.PluginSystem.Init(): Plugin '" + name + "' doesn't have PluginInit handler");
-            
-            object.PluginInit(Hooks);
-            
-            jQuery.each(Hooks, function(hook_type, func) {
-                CMS.OutDebug("CMS.PluginSystem.Init(): Hooking '" + hook_type + "' for plugin '" + name + "'");
-                
-                // Hook
-                CMS.PluginSystem.Hook(hook_type, func, name);
-            });
-        });
+        // Hook Plugins
+        this.HookAll();
         
         // Ready!
         CMS.OutDebug("CMS.PluginSystem.Init(): Loaded!");
@@ -42,6 +25,28 @@ CMS.PluginSystem = {
             return CMS.OutError("CMS.PluginSystem.LoadPlugin(): Param 2 Type missmatch for plugin '" + name + "'. Expected 'object' got '" + typeof(object) + "'");
         
         this.Plugins[name] = object;
+    },
+    
+    HookAll: function() {
+        for (var name in this.Plugins) {
+            var plugin = this.Plugins[name];
+            CMS.OutDebug("CMS.PluginSystem.HookAll(): Loading plugin '" + name + "'");
+            
+            // Init Hooks Array
+            var Hooks = new Array;
+            
+            if (!plugin.PluginInit)
+                return CMS.OutError("CMS.PluginSystem.HookAll(): Plugin '" + name + "' doesn't have PluginInit handler");
+            
+            plugin.PluginInit(Hooks);
+            
+            for (var hook_type in Hooks) {
+                CMS.OutDebug("CMS.PluginSystem.HookAll(): Hooking '" + hook_type + "' for plugin '" + name + "'");
+                
+                // Hook
+                CMS.PluginSystem.Hook(hook_type, Hooks[hook_type], name);
+            }
+        }
     },
 
     Hook: function(type, func, name) {

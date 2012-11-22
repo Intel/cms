@@ -1,4 +1,10 @@
-var Plugin_input_link = {
+CMS.PluginSystem.LoadPlugin("input_link", {
+    PluginInit: function(Hooks) {
+        Hooks["EditableObject_Generate"] = this.Generate;
+        Hooks["EditableObject_LoadLocale"] = this.LoadLocale;
+        Hooks["EditableObject_Save"] = this.Save;
+    },
+    
     Generate: function(link_data) {
         var tmpl = jQuery.templates('<label><span style="float: left; margin-right: 5px;" class="ui-icon ui-icon-grip-diagonal-se"></span>{{>title}}</label> \
                                      <div class="editor-dialog-input-container"> \
@@ -71,8 +77,4 @@ var Plugin_input_link = {
         // Send all data, we'll process it in php
         return link_data;
     }
-};
-
-PluginMgr.Hook("EditableObject_Generate", Plugin_input_link.Generate, "input_link");
-PluginMgr.Hook("EditableObject_LoadLocale", Plugin_input_link.LoadLocale, "input_link");
-PluginMgr.Hook("EditableObject_Save", Plugin_input_link.Save, "input_link");
+});
