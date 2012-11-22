@@ -314,8 +314,13 @@
             Editor::LoadJS("_cms/js/kendo.web.min.js", 4);
             
             // Editor
-            Editor::LoadCSS("_cms/css/editor.css");
-            Editor::LoadJS("_cms/js/editor.js", 3);
+            //Editor::LoadCSS("_cms/css/editor.css");
+            //Editor::LoadJS("_cms/js/editor.js", 3);
+            Editor::LoadJS("_cms/js/cms.core.js", 3);
+            Editor::LoadJS("_cms/js/cms.comm.js", 2);
+            Editor::LoadJS("_cms/js/cms.pluginsystem.js", 2);
+            Editor::LoadJS("_cms/js/cms.toolbar.js", 2);
+            Editor::LoadCSS("_cms/css/cms.toolbar.css");
             
             $compiler = new Compiler();
             $doc = $compiler->CompilePage(self::$m_pageid, COMPILER_MODE_EDITOR);
@@ -450,7 +455,7 @@
             $heads = $a_doc->getElementsByTag('CMS_HEAD');
             $head = $heads[0];
             
-            $head_html = '<script type="text/javascript">var editorData = JSON.parse(\'' . str_replace("\\", "\\\\", json_encode(self::$m_data)) . '\');</script>' . self::$m_extra_head;
+            $head_html = '<script id="cms-data" type="application/json">' . str_replace("\\", "\\\\", json_encode(self::$m_data)) . '</script>' . self::$m_extra_head;
             
             // Add
             $head->addChild(new Template_TextNode($head_html));

@@ -1,4 +1,9 @@
-var Plugin_input_gallery = {
+CMS.PluginSystem.LoadPlugin('input_gallery', {
+    PluginInit: function(Hooks) {
+        Hooks["EditableObject_Generate"] = this.Generate;
+        Hooks["EditableObject_Save"] = this.Save;
+    },
+    
     Generate: function(object_data) {
         var tmpl = jQuery.templates('<label><span style="float: left; margin-right: 5px;" class="ui-icon ui-icon-grip-diagonal-se"></span>{{>title}}</label></br> \
                                      <ul class="ui-widget-content" style="list-style-type: none; margin: 0; padding: 0; width: 450px;"></ul></br> \
@@ -63,7 +68,4 @@ var Plugin_input_gallery = {
         // Send all data, we'll process it in php
         return data;
     }
-};
-
-PluginMgr.Hook("EditableObject_Generate", Plugin_input_gallery.Generate, "input_gallery");
-PluginMgr.Hook("EditableObject_Save", Plugin_input_gallery.Save, "input_gallery");
+});

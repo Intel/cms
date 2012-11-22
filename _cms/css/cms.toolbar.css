@@ -1,0 +1,13 @@
+#cms-toolbar-wrapper
+{
+    position: fixed;
+    top: 20px;
+    bottom: 20px;
+    width: 200px;
+    z-index: 10000;
+}
+
+#cms-toolbar-container
+{
+    padding: 10px;
+}
