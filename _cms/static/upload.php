@@ -11,9 +11,9 @@
     if ($image->getImageHeight() > 2000 || $image->getImageWidth() > 3200) {
         $aspect = $image->getImageWidth() / $image->getImageHeight();
         if ($aspect < 1)
-            $img->cropThumbnailImage($aspect * 2000, 2000);
+            $image->cropThumbnailImage($aspect * 2000, 2000);
         else
-            $img->cropThumbnailImage(3200, 3200 / $aspect);
+            $image->cropThumbnailImage(3200, 3200 / $aspect);
     }
     
     $filehash = '';
