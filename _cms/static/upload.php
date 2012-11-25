@@ -1,19 +1,16 @@
 <?
     include("../includes/defines.php");
+    include("../includes/class_imagehandler.php");
     
     if (!$_FILES['image'])
         exit('no file');
     
-    $image;
-    if (!$image = new Imagick($_FILES['image']['tmp_name']))
+    $image = new ImageHandler($_FILES['image']['tmp_name']);
+    if (!$image->ready)
         exit('failed to load img');
     
-    if ($image->getImageHeight() > 2000 || $image->getImageWidth() > 3200) {
-        $aspect = $image->getImageWidth() / $image->getImageHeight();
-        if ($aspect < 1)
-            $image->cropThumbnailImage($aspect * 2000, 2000);
-        else
-            $image->cropThumbnailImage(3200, 3200 / $aspect);
+    if ($image->GetHeight() > 2000 || $image->GetWidth() > 3200) {
+        $image->Resize(3200, 2000);
     }
     
     $filehash = '';
@@ -21,9 +18,7 @@
         $filehash = md5(uniqid());
     } while (file_exists('images/' . $filehash . '.jpg'));
     
-    $image->setCompression(Imagick::COMPRESSION_JPEG);
-    $image->setCompressionQuality(STATIC_IMG_QUALITY); 
-    $image->writeImage('images/' . $filehash . '.jpg');
+    $image->Save('images/' . $filehash . '.jpg');
     
     $response = array();
     $response['hash'] = $filehash;

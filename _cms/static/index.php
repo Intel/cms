@@ -1,4 +1,7 @@
 <?
+    include("../includes/defines.php");
+    include("../includes/class_imagehandler.php");
+    
 	$hash = $_GET['hash'];
 	
 	// check for bad symbols
@@ -25,15 +28,14 @@
 		die('not found');
     
 	if ($width || $height) {
-        $img = new Imagick($file);
+        $img = new ImageHandler($file);
         
-        $img->cropThumbnailImage($width, $height);
-        $img->writeImage($file_resized);
+        $img->Resize($width, $height, true);
+        
+        $img->Save($file_resized);
         
         header("Content-Type: image/jpeg");
-        print $img->getImageBlob();
-        
-        $img->destroy();
+        readfile($file_resized);
 	} else {
         header("Content-Type: image/jpeg");
         readfile($file);
