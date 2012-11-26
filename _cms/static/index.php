@@ -30,7 +30,7 @@
 	if ($width || $height) {
         $img = new ImageHandler($file);
         
-        $img->Resize($width, $height, true);
+        $img->Resize($width, $height);
         
         $img->Save($file_resized);
         

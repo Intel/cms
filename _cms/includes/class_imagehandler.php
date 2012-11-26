@@ -3,6 +3,8 @@
     // Image Management Class
     // #########################
     
+    include('php_image_magician.php');
+    
     define("IMAGEHANDLER_GD",       0);
     define("IMAGEHANDLER_IMAGICK",  1);
     define("IMAGEHANDLER_DEFAULT",  IMAGEHANDLER_IMAGICK);
@@ -35,8 +37,17 @@
             $this->ready = $this->handler->ready;
         }
         
-        public function Resize($w, $h, $crop = false) {
-            $this->handler->Resize($w, $h, $crop);
+        public function Resize($w, $h, $option = 'auto') {
+            if ($option == 'auto') {
+                if ($w && $h)
+                    $option = 'crop';
+                else if ($w)
+                    $option = 'landscape';
+                else
+                    $option = 'portrait';
+            }
+            
+            $this->handler->Resize($w, $h, $option);
         }
         
         public function Save($path) {
@@ -52,46 +63,23 @@
         }
     }
     
+    // Using image magician
     class GDImageHandler {
         public $ready = false;
         public $gdimg;
         
         public function __construct($image) {
-            $this->gdimg = $this->imageCreateFromAny($image);
+            $this->gdimg = new imageLib($image); 
             if ($this->gdimg)
                 $this->ready = true;
         }
         
-        public function Resize($w, $h, $crop = false) {
-            $width = imagesx($this->gdimg);
-            $height = imagesy($this->gdimg);
-            $r = $width / $height;
-            if ($crop) {
-                if ($width > $height) {
-                    $width = ceil($width-($width*($r-$w/$h)));
-                } else {
-                    $height = ceil($height-($height*($r-$w/$h)));
-                }
-                $newwidth = $w;
-                $newheight = $h;
-            } else {
-                if ($w/$h > $r) {
-                    $newwidth = $h*$r;
-                    $newheight = $h;
-                } else {
-                    $newheight = $w/$r;
-                    $newwidth = $w;
-                }
-            }
-                
-            $dst = imagecreatetruecolor($newwidth, $newheight);
-            imagecopyresampled($dst, $this->gdimg, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
-
-            $this->gdimg = $dst;
+        public function Resize($w, $h, $option) {
+            $this->gdimg->resizeImage($w, $h, $option);
         }
         
         public function Save($path) {
-            imagejpeg($this->gdimg, $path, STATIC_IMG_QUALITY);
+            $this->gdimg->saveImage($path);
         }
         
         public function GetHeight() {
@@ -100,34 +88,6 @@
         
         public function GetWidth() {
             return imagesx($this->gdimg);
-        }
-        
-        public function imageCreateFromAny($filepath) {
-            $type = exif_imagetype($filepath); // [] if you don't have exif you could use getImageSize()
-            $allowedTypes = array(
-                1,  // [] gif
-                2,  // [] jpg
-                3,  // [] png
-                6   // [] bmp
-            );
-            if (!in_array($type, $allowedTypes)) {
-                return false;
-            }
-            switch ($type) {
-                case 1 :
-                    $im = imageCreateFromGif($filepath);
-                break;
-                case 2 :
-                    $im = imageCreateFromJpeg($filepath);
-                break;
-                case 3 :
-                    $im = imageCreateFromPng($filepath);
-                break;
-                case 6 :
-                    $im = imageCreateFromBmp($filepath);
-                break;
-            }   
-            return $im; 
         }
     }
     
@@ -141,11 +101,15 @@
                 $this->ready = true;
         }
         
-        public function Resize($w, $h, $crop = false) {
-            if ($crop) {
-                $this->img->cropThumbnailImage($w, $h);
-            } else {
-                $this->img->thumbnailImage($w, $h, TRUE);
+        public function Resize($w, $h, $option) {
+            switch($option) {
+                case 'crop':
+                    $this->img->cropThumbnailImage($w, $h);
+                    break;
+                case 'landscape':
+                case 'portrait':
+                    $this->img->scaleImage($w, $h, false);
+                    break;
             }
         }
         
