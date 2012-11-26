@@ -10,7 +10,7 @@
         exit('failed to load img');
     
     if ($image->GetHeight() > 2000 || $image->GetWidth() > 3200) {
-        $image->Resize(3200, 2000);
+        $image->Resize(3200, 2000, 'fit');
     }
     
     $filehash = '';

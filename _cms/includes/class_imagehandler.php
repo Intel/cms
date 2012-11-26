@@ -47,6 +47,19 @@
                     $option = 'portrait';
             }
             
+            if ($option == 'fit') {
+                if (!$w || !$h)
+                    die("ImageHandler::Resize(): Width or Height is missing!");
+                
+                $aspect_orig = $this->GetHeight() / $this->GetWidth();
+                $aspect_new = $h / $w;
+                
+                if ($aspect_orig > $aspect_new)
+                    $option = 'portrait';
+                else
+                    $option = 'landscape';
+            }
+            
             $this->handler->Resize($w, $h, $option);
         }
         
@@ -107,8 +120,10 @@
                     $this->img->cropThumbnailImage($w, $h);
                     break;
                 case 'landscape':
+                    $this->img->scaleImage($w, 0, false);
+                    break;
                 case 'portrait':
-                    $this->img->scaleImage($w, $h, false);
+                    $this->img->scaleImage(0, $h, false);
                     break;
             }
         }
