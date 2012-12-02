@@ -1,4 +1,4 @@
-<?
+<?php
     class Plugin_cms_iterator {
         public function __construct() {
             Editor::LoadJS('_cms/plugins/cms_iterator/cms_iterator.js');

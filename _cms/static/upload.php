@@ -1,4 +1,4 @@
-<?
+<?php
     include("../includes/defines.php");
     include("../includes/class_imagehandler.php");
     

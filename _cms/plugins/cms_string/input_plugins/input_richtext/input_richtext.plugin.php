@@ -1,4 +1,4 @@
-<?
+<?php
     class Plugin_input_richtext {
         public function __construct() {
             // Load JS

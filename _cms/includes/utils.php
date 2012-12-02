@@ -1,4 +1,4 @@
-<?
+<?php
     function BuildString($a_format, $a_vars)
     {
         $count = 1;

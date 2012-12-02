@@ -1,4 +1,4 @@
-<?
+<?php
     class Plugin_cms_string {
         public $m_pluginmgr = NULL;
         

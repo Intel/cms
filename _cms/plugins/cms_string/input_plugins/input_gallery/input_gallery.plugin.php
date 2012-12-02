@@ -1,4 +1,4 @@
-<?
+<?php
     class Plugin_input_gallery {
         public function __construct() {
             // Load JS

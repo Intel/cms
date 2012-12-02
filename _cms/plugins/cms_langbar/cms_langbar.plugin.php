@@ -1,4 +1,4 @@
-<?
+<?php
     class Plugin_cms_langbar {
         function On_Compiler_BuiltTemplate($a_data) {
             // Get Template_Document from event data
