@@ -14,7 +14,7 @@ CMS.PluginSystem = {
         this.HookAll();
         
         // Ready!
-        CMS.OutDebug("CMS.PluginSystem.Init(): Loaded!", CMS_DEBUG_PLUGINSYSTEM);
+        CMS.OutDebug("CMS.PluginSystem.Init(): Loaded!", CMS.Debug.JS_PLUGINSYSTEM);
     },
     
     LoadPlugin: function(name, object) {
@@ -30,7 +30,7 @@ CMS.PluginSystem = {
     HookAll: function() {
         for (var name in this.Plugins) {
             var plugin = this.Plugins[name];
-            CMS.OutDebug("CMS.PluginSystem.HookAll(): Loading plugin '" + name + "'", CMS_DEBUG_PLUGINSYSTEM);
+            CMS.OutDebug("CMS.PluginSystem.HookAll(): Loading plugin '" + name + "'", CMS.Debug.JS_PLUGINSYSTEM);
             
             // Init Hooks Array
             var Hooks = new Array;
@@ -41,7 +41,7 @@ CMS.PluginSystem = {
             plugin.PluginInit(Hooks);
             
             for (var hook_type in Hooks) {
-                CMS.OutDebug("CMS.PluginSystem.HookAll(): Hooking '" + hook_type + "' for plugin '" + name + "'", CMS_DEBUG_PLUGINSYSTEM);
+                CMS.OutDebug("CMS.PluginSystem.HookAll(): Hooking '" + hook_type + "' for plugin '" + name + "'", CMS.Debug.JS_PLUGINSYSTEM);
                 
                 // Hook
                 CMS.PluginSystem.Hook(hook_type, Hooks[hook_type], name);
@@ -65,10 +65,10 @@ CMS.PluginSystem = {
     },
 
     Execute: function(type) {
-        CMS.OutDebug("CMS.PluginSystem.Execute(): Executing '" + type + "' hooks", CMS_DEBUG_PLUGINSYSTEM);
+        CMS.OutDebug("CMS.PluginSystem.Execute(): Executing '" + type + "' hooks", CMS.Debug.JS_PLUGINSYSTEM);
         var args = Array.prototype.slice.call(arguments, 1);
         $.each(this.hooks[type], function (index, data) {
-            CMS.OutDebug("CMS.PluginSystem.HookAll(): Executing '" + type + "' for plugin '" + data.name + "'", CMS_DEBUG_PLUGINSYSTEM);
+            CMS.OutDebug("CMS.PluginSystem.HookAll(): Executing '" + type + "' for plugin '" + data.name + "'", CMS.Debug.JS_PLUGINSYSTEM);
             data.func.apply(null, args);
         });
     },

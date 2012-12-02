@@ -116,6 +116,12 @@
         return $attr_array;
     }
     
+    function get_class_consts($class_name)
+    {
+        $c = new ReflectionClass($class_name);
+        return ($c->getConstants());
+    }
+    
     // Cookies
     
     function UGetCookie($a_cookie)

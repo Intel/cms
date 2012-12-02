@@ -1,0 +1,26 @@
+.cms-module-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+}
+
+.cms-module-overlay-bg {
+    width: 100%;
+    height: 100%;
+    opacity: 0.6;
+    filter:Alpha(Opacity=60);
+}
+
+.cms-module-highlight {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+    opacity: 0.2;
+    filter:Alpha(Opacity=20);
+}

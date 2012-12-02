@@ -12,23 +12,6 @@
         public static $m_moduleid;
         public static $m_extra_head;
         public static $m_scripts = array();
-        
-		public static function CreateModule($a_type, $a_template, $a_name) {
-			if (!is_file(COMPILER_TEMPLATES_DIR . "/modules/" . $a_type . "/" . $a_template . ".tmpl"))
-				die("Editor::CreateModule: Template not found: " . $a_type . ":" . $a_template);
-			
-			$type = Database::Escape($a_type);
-			$template = Database::Escape($a_template);
-			$name = Database::Escape($a_name);
-			
-			Database::Query("INSERT INTO `" . DB_TBL_MODULE_TEMPLATE . "` (`type`, `template`, `name`) VALUES ('" . $type . "', '" . $template . "', '" . $name . "')");
-			
-			$id = Database::GetLastIncrId();
-			
-			$data = self::GenerateModuleData($id);
-			
-			print (json_encode($data));
-		}
 		
 		public static function DeleteModule($a_id, $a_force = false) {
 			$id = Database::Escape($a_id);
@@ -235,52 +218,6 @@
                 $data_object->owner = $a_owner;
                 $data_object->moduleid = self::$m_moduleid;
                 ObjMgr::GetPluginMgr()->ExecuteHook("On_Editor_SaveModuleFragmentObject", $data_object);
-                
-                /*$name = Database::Escape($object['name']);
-                
-                switch ($object['type'])
-                {
-                    case 'itr':
-                        Database::Query("INSERT INTO `" . DB_TBL_DATA . "` (`type`, `name`, `owner`, `moduleid`) VALUES ('itr', '" . $object['name'] . "', '" . $a_parent . "', '" . self::$m_moduleid . "')");
-                        $id = Database::GetLastIncrId();
-                        self::SaveModuleFragment($object['data'], -($id));
-                        break;
-                    case 'string':
-                        Database::Query("INSERT INTO `" . DB_TBL_DATA . "` (`type`, `name`, `owner`, `moduleid`) VALUES ('string', '" . $object['name'] . "', '" . $a_parent . "', '" . self::$m_moduleid . "')");
-                        $id = Database::GetLastIncrId();
-                        // Iterate over locales
-                        foreach ($object['value'] as $locale=>$string) {
-                            $string = Database::Escape($string);
-                            Database::Query("INSERT INTO `" . DB_TBL_STRINGS . "` (`id`, `moduleid`, `locale`, `string`) VALUES ('" . $id . "', '" . self::$m_moduleid . "', '" . $locale . "', '" . $string . "')");
-                        }
-                        break;
-                    case 'link':
-                        Database::Query("INSERT INTO `" . DB_TBL_DATA . "` (`type`, `name`, `owner`, `moduleid`) VALUES ('string', '" . $object['name'] . "', '" . $a_parent . "', '" . self::$m_moduleid . "')");
-                        $id = Database::GetLastIncrId();
-                        $url = Database::Escape($object['link_url']);
-                        // Iterate over locales
-                        foreach ($object['link_title'] as $locale=>$string) {
-                            $string = Database::Escape($string);
-                            Database::Query("INSERT INTO `" . DB_TBL_STRINGS . "` (`id`, `moduleid`, `locale`, `string`, `string2`) VALUES ('" . $id . "', '" . self::$m_moduleid . "', '" . $locale . "', '" . $url . "', '" . $string . "')");
-                        }
-                        break;
-					case 'richtext':
-						Database::Query("INSERT INTO `" . DB_TBL_DATA . "` (`type`, `name`, `owner`, `moduleid`) VALUES ('string', '" . $object['name'] . "', '" . $a_parent . "', '" . self::$m_moduleid . "')");
-                        $id = Database::GetLastIncrId();
-                        // Iterate over locales
-                        foreach ($object['value'] as $locale=>$string) {
-                            $string = str_replace('<br>', '<br></br>', $string);
-                            $string = Database::Escape($string);
-                            Database::Query("INSERT INTO `" . DB_TBL_STRINGS . "` (`id`, `moduleid`, `locale`, `string`) VALUES ('" . $id . "', '" . self::$m_moduleid . "', '" . $locale . "', '" . $string . "')");
-                        }
-                        break;
-                    case 'img':
-                        Database::Query("INSERT INTO `" . DB_TBL_DATA . "` (`type`, `name`, `owner`, `moduleid`) VALUES ('string', '" . $object['name'] . "', '" . $a_parent . "', '" . self::$m_moduleid . "')");
-                        $id = Database::GetLastIncrId();
-                        $img_src = Database::Escape($object['img_src']);
-                        Database::Query("INSERT INTO `" . DB_TBL_STRINGS . "` (`id`, `moduleid`, `string`) VALUES ('" . $id . "', '" . self::$m_moduleid . "', '" . $img_src . "')");
-                        break;
-                }*/
             }
         }
         
@@ -327,6 +264,8 @@
             Editor::LoadJS("_cms/js/cms.pluginsystem.js", 2);
             Editor::LoadJS("_cms/js/cms.toolbar.js", 2);
             Editor::LoadCSS("_cms/css/cms.toolbar.css");
+            Editor::LoadJS("_cms/js/cms.objmgr.js", 2);
+            Editor::LoadCSS("_cms/css/cms.module.css");
             
             $compiler = new Compiler();
             $doc = $compiler->CompilePage(self::$m_pageid, COMPILER_MODE_EDITOR);
@@ -352,6 +291,10 @@
                                                 'Current' => Locales::$m_locale, 
                                                 'List' => $locale_list));
             self::AddData(DATA_STRINGS, Locales::$m_const_strings[Locales::$m_locale]);
+            self::AddData(DATA_DEFINES, array(  'OPCodes' => get_class_consts("AJAXCommOPCodes"),
+                                                'DebugMaskList' => get_class_consts("DebugMask"),
+                                                'DebugMask' => LOG_DEBUGMASK,
+                                                'AJAX_URL' => AJAX_URL));
             self::GeneratePageData();
 			self::GenerateModulesData();
             
@@ -409,6 +352,9 @@
 					break;
                 case DATA_JAVASCRIPT:
                     self::$m_extra_head .= '<script type="text/javascript" src="' . $a_data . '"></script>';
+                    break;
+                case DATA_DEFINES:
+                    self::$m_data['Defines'] = $a_data;
                     break;
                 default:
                     die('Unknown data type passed to Editor::AddData');

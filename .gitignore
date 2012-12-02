@@ -3,7 +3,7 @@
 !_cms/*
 /_cms/static/images/*.jpg
 /_cms/templates/*
-/_cms/includes/defines.php
+/_cms/includes/config.php
 !index.php
 !admin.php
 !.gitignore

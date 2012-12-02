@@ -56,7 +56,7 @@ CMS.ToolBar = {
         this.TreeView.Create();
         
         // Ready!
-        CMS.OutDebug("CMS.ToolBar.Init(): Loaded!", CMS_DEBUG_TOOLBAR);
+        CMS.OutDebug("CMS.ToolBar.Init(): Loaded!", CMS.Debug.JS_TOOLBAR);
     },
     
     TreeView: {
@@ -95,7 +95,7 @@ CMS.ToolBar = {
                 var page = CMS.Data.Page.Pages[pageid];
                 var name = page.Name[CMS.Locales.Current];
                 
-                CMS.OutDebug("CMS.ToolBar.TreeView.FillPages(): Adding Page '" + name +"'", CMS_DEBUG_TOOLBAR);
+                CMS.OutDebug("CMS.ToolBar.TreeView.FillPages(): Adding Page '" + name +"'", CMS.Debug.JS_TOOLBAR);
                 
                 var PageNode = this.AddNode('<span class="k-sprite k-icon" style="background: url(\'_cms/images/icons16/page.png\')"></span>' + name + ' <span style="font-size: 6px">' + pageid + '</span><span class="k-sprite k-icon k-i-custom">', "page", this.NodePages);
                 
@@ -107,19 +107,22 @@ CMS.ToolBar = {
         },
         
         FillModules: function() {
-            for (var moduleid in CMS.Data.Modules) {
+            jQuery.each(CMS.Data.Modules, function(moduleid) {
                 var module = CMS.Data.Modules[moduleid];
                 
-                CMS.OutDebug("CMS.ToolBar.TreeView.FillModules(): Adding Module '" + module.name +"'", CMS_DEBUG_TOOLBAR);
+                CMS.OutDebug("CMS.ToolBar.TreeView.FillModules(): Adding Module '" + module.name +"'", CMS.Debug.JS_TOOLBAR);
                 
-                var ModuleNode = this.AddNode('<span class="k-sprite k-icon" style="background: url(\'_cms/images/icons16/brick.png\')"></span>' + module.name + ' <span style="font-size: 6px">' + module.id + '</span><span class="k-sprite k-icon k-i-custom">', "module", this.NodeModules);
-                ModuleNode.data("NodeType", "module");
-                ModuleNode.kendoDraggable({
-                        hint: function(element) {
-                            return element.clone();
-                        }
-                    });
-            }
+                var ModuleNode = CMS.ToolBar.TreeView.AddNode('<span class="k-sprite k-icon" style="background: url(\'_cms/images/icons16/brick.png\')"></span>' + module.name + ' <span style="font-size: 6px">' + module.id + '</span><span class="k-sprite k-icon k-i-custom">', "module", CMS.ToolBar.TreeView.NodeModules);
+                ModuleNode.hover(
+                    function () {
+                        CMS.ObjMgr.GetModule(module.id).Objects.append('<div class="cms-module-highlight k-block k-success-colored"></div>');
+                    },
+                    function () {
+                        CMS.ObjMgr.GetModule(module.id).Objects.find('.cms-module-highlight').remove();
+                    }
+                );
+                ModuleNode.disableSelection();
+            });
             this.AddNode('<span class="k-sprite k-icon" style="background: url(\'_cms/images/icons16/add.png\')"></span>Create Module', "", this.NodeModules);
         },
         

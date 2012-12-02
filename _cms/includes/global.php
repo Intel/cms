@@ -9,6 +9,9 @@
     // Main definitions
     include("defines.php");
     
+    // Config
+    include("config.php");
+    
     // Helper functions
     include("utils.php");
     
@@ -21,6 +24,7 @@
     include("class_content.php");
     include("class_editor.php");
     include("class_pluginmgr.php");
+    include("class_ajax_comm.php");
     
     class ObjMgr {
         private static $m_account;

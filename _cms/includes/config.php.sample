@@ -1,0 +1,45 @@
+<?
+    // ###################
+	// Configuration Options
+	// ###################
+
+	if (!FAKE)
+		exit;
+    
+    // Logging
+    define("LOG_DEBUGMASK",                 DEBUG_NONE);
+    
+    // Database
+    define("DB_HOST",                       "localhost");
+    define("DB_USER",                       "user");
+    define("DB_PASS",                       "pass");
+    define("DB_DATABASE",                   "db");
+	
+	// Static data
+	define("STATIC_URL",					"_cms/static/");
+	define("STATIC_IMG_EXT",				".jpg");
+    define("STATIC_IMG_QUALITY",            90); // 0-100
+    
+    // Compiler
+    define("COMPILER_TEMPLATES_DIR",        "_cms/templates");
+
+    // Template Engine
+    define("TEMPLATE_ESCAPE_CHARACTER",     '@');
+    
+    // Locales
+    define("LOCALES_DIR",                   "_cms/locales");
+    define("LOCALES_DEFAULT",               "enUS");
+    
+    // Plugins
+    define("PLUGIN_DIR",                    "_cms/plugins");
+    define("PLUGIN_EXT",                    ".plugin.php");
+    
+    // jQuery Options
+    define("JQUERY_VERSION",                "1.8.2");
+    define("JQUERY_UI_VERSION",             "1.9.0");
+    define("JQUERY_UI_THEME",               "ui-lightness"); // ui-lightness, dark-hive
+    
+    // KendoUI Options
+    define("KENDOUI_THEME",                 "default");
+    
+?>

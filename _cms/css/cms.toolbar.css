@@ -10,4 +10,5 @@
 #cms-toolbar-container
 {
     padding: 10px;
+    overflow: hidden;
 }

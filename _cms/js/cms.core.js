@@ -1,6 +1,5 @@
 $(function() {
     $.cookie.json = true;
-    CMS.DebugMask = CMS_DEBUG_CORE | CMS_DEBUG_TOOLBAR;
     CMS.Init();
 });
 
@@ -10,12 +9,13 @@ var CMS = {
     ToolBar: false,
     Comm: false,
     Locales: false,
+    ObjMgr: false,
     
     // Internal Data
     Data: false,
     
     // Debug Settings
-    DebugLevel: 0,
+    DebugMask: 0,
     
     Init: function() {
         // Check for dependencies
@@ -27,6 +27,8 @@ var CMS = {
             return CMS.OutError("CMS.Init(): PluginSystem module not loaded");
         else if (!this.ToolBar)
             return CMS.OutError("CMS.Init(): ToolBar module not loaded");
+        else if (!this.ObjMgr)
+            return CMS.OutError("CMS.Init(): ObjMgr module not loaded");
         
         // Load CMS Data
         var cms_data = $("#cms-data");
@@ -34,6 +36,10 @@ var CMS = {
             return CMS.OutError("CMS.Init(): JSON Data not found");
         else
             this.Data = JSON.parse(cms_data.html());
+        
+        // Initialize Debug
+        this.Debug = this.Data.Defines.DebugMaskList;
+        this.DebugMask = this.Data.Defines.DebugMask;
         
         // Load User Data
         this.LoadUserData();
@@ -46,6 +52,8 @@ var CMS = {
         this.PluginSystem.Init();
         // Initialize toolbar
         this.ToolBar.Init();
+        // Initialize ObjMgr
+        this.ObjMgr.Init();
         
         // Events
         $(window).unload(function() {
@@ -53,7 +61,7 @@ var CMS = {
         });
         
         // We're ready to go!
-        CMS.OutDebug("CMS.Init(): Loaded!", CMS_DEBUG_CORE);
+        CMS.OutDebug("CMS.Init(): Loaded!", CMS.Debug.JS_CORE);
     },
     
     OutError: function(error) {
@@ -69,18 +77,16 @@ var CMS = {
     },
     
     SaveUserData: function() {
-        CMS.OutDebug("CMS.SaveUserData(): Saving...", CMS_DEBUG_CORE);
-        
         var UserData = new Object;
         UserData.ToolBar = new Object;
         UserData.ToolBar.Opened = CMS.ToolBar.Opened;
         UserData.ToolBar.Locked = CMS.ToolBar.Locked;
         $.cookie('CMS_USERDATA', UserData);
+        
+        CMS.OutDebug("CMS.SaveUserData(): Saved", CMS.Debug.JS_CORE);
     },
     
     LoadUserData: function() {
-        CMS.OutDebug("CMS.LoadUserData(): Loading...", CMS_DEBUG_CORE);
-        
         var UserData = $.cookie('CMS_USERDATA');
         
         if (!UserData)
@@ -88,11 +94,14 @@ var CMS = {
         
         CMS.ToolBar.Opened = UserData.ToolBar.Opened;
         CMS.ToolBar.Locked = UserData.ToolBar.Locked;
+        
+        CMS.OutDebug("CMS.LoadUserData(): Loaded", CMS.Debug.JS_CORE);
+    },
+    
+    GenUniqueID: function() {
+        if (!this.UniqueIDPointer)
+            return this.UniqueIDPointer = (new Date()).getTime();
+        else
+            return ++this.UniqueIDPointer;
     }
 };
-
-var CMS_DEBUG_CORE = 1;
-var CMS_DEBUG_COMM = 2;
-var CMS_DEBUG_LOCALES = 4;
-var CMS_DEBUG_TOOLBAR = 8;
-var CMS_DEBUG_PLUGINSYSTEM = 16;
